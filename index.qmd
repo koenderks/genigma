@@ -1,0 +1,31 @@
+```{r echo = FALSE}
+options(width = 77)
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.show = "hold",
+  fig.align = "center",
+  fig.width = 12,
+  fig.height = 12,
+  out.width = NULL
+)
+source("./R/generate.R")
+```
+
+```{r echo = FALSE}
+for (i in 1:10) {
+  seed <- sample.int(.Machine$integer.max, 1)
+  set.seed(seed)
+  p1 <- generate_mandala(colors = FALSE)
+  set.seed(seed)
+  p2 <- generate_mandala(colors = TRUE)
+  gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
+    2, 2, 2, 2, NA,
+    2, 2, 2, 2, NA,
+    2, 2, 2, 2, NA,
+    2, 2, 2, 1, 1,
+    NA, NA, NA, 1, 1
+  ), byrow = TRUE, nrow = 5, ncol = 5))
+}
+```

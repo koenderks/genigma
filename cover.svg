@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="210mm"
+   viewBox="0 0 210 210"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e, 2022-07-14)"
+   sodipodi:docname="cover.svg"
+   inkscape:export-filename="cover.pdf"
+   inkscape:export-xdpi="25.4"
+   inkscape:export-ydpi="25.4"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="1"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.60048399"
+     inkscape:cx="389.68566"
+     inkscape:cy="409.66954"
+     inkscape:window-width="1512"
+     inkscape:window-height="834"
+     inkscape:window-x="0"
+     inkscape:window-y="38"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <rect
+       x="36.650391"
+       y="258.38525"
+       width="720.18018"
+       height="142.93652"
+       id="rect4211" />
+    <rect
+       x="23.130674"
+       y="442.25848"
+       width="606.94885"
+       height="98.999283"
+       id="rect4205" />
+    <rect
+       x="177.51939"
+       y="1434.244"
+       width="1739.1896"
+       height="2419.4631"
+       id="rect823" />
+    <rect
+       x="208.51485"
+       y="1487.7816"
+       width="1527.2303"
+       height="690.35321"
+       id="rect655" />
+    <rect
+       x="1388.8802"
+       y="2292.6038"
+       width="442.34885"
+       height="147.44962"
+       id="rect113" />
+    <rect
+       x="1388.8802"
+       y="2292.6038"
+       width="442.34885"
+       height="147.44962"
+       id="rect113-5" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:0.0918108"
+       id="rect6077"
+       width="210"
+       height="210"
+       x="0"
+       y="0"
+       ry="0" />
+    <text
+       xml:space="preserve"
+       transform="matrix(0.16978004,0,0,0.17204301,-160.97005,-207.22239)"
+       id="text111"
+       style="font-size:80px;white-space:pre;shape-inside:url(#rect113);display:inline;fill:#ffffff;fill-opacity:1"><tspan
+         x="1388.8809"
+         y="2366.4333"
+         id="tspan28516"><tspan
+           style="font-family:'.New York';-inkscape-font-specification:'.New York';fill:#000000"
+           id="tspan28514">Koen Derks</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       transform="scale(0.1143,0.10244537)"
+       id="text653"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:133.333px;font-family:Papyrus;-inkscape-font-specification:Papyrus;white-space:pre;shape-inside:url(#rect655);display:inline;fill:#d40000" />
+    <text
+       xml:space="preserve"
+       style="font-size:17.7748px;font-family:'.New York';-inkscape-font-specification:'.New York';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#0e0e44;stroke-width:2.66622"
+       x="104.3599"
+       y="24.646816"
+       id="text4199"
+       transform="scale(1.0077084,0.99235054)"><tspan
+         sodipodi:role="line"
+         id="tspan4197"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.6389px;font-family:'Marker Felt';-inkscape-font-specification:'Marker Felt';stroke:none;stroke-width:2.66622"
+         x="104.3599"
+         y="24.646816">Generative Mandalas:</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:14.1111px;font-family:'Marker Felt';-inkscape-font-specification:'Marker Felt';stroke:none;stroke-width:2.66622"
+         x="104.3599"
+         y="46.865314"
+         id="tspan4201">A Coloring Book</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text4203"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;font-family:Papyrus;-inkscape-font-specification:Papyrus;text-align:center;white-space:pre;shape-inside:url(#rect4205);display:inline;fill:#000000;fill-opacity:1;stroke:#0e0e44;stroke-width:10" />
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text4209"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;font-family:'Apple Chancery';-inkscape-font-specification:'Apple Chancery';text-align:center;white-space:pre;shape-inside:url(#rect4211);display:inline;fill:none;fill-opacity:0.0114942;stroke:none;stroke-width:10" />
+  </g>
+</svg>

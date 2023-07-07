@@ -1,0 +1,9 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+_book
+chapters_md/
+temp/
+/.quarto/
+.DS_Store
