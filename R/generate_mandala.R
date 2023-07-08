@@ -47,7 +47,9 @@ generate_mandala <- function(colors = FALSE, labels = FALSE) {
   polygonColorIndex <- as.character(as.numeric(factor(cols, levels = unique(cols))))
   polygonColorIndex[which(cols == "#ffffff")] <- ""
   if (!colors) {
-	suppressMessages({ p <- p + ggplot2::scale_fill_gradientn(colors = "#ffffff") })
+    suppressMessages({
+      p <- p + ggplot2::scale_fill_gradientn(colors = "#ffffff")
+    })
   }
   if (labels) {
     p <- p + ggplot2::annotate(geom = "text", x = means_x, y = means_y, label = polygonColorIndex, size = 0.9)

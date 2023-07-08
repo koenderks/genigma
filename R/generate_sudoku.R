@@ -6,22 +6,25 @@ generate_sudoku <- function(blank = 50) {
   for (i in 1:5) {
     z <- z[replicate(3, sample(3)) + 3 * rep(sample(0:2), each = 3), replicate(3, sample(3)) + 3 * rep(sample(0:2), each = 3)]
   }
-    for (bi in seq(0, 6, 3)) {
-      for (bj in seq(0, 6, 3)) {
-        idx <- data.matrix(expand.grid(bi + 1:3, bj + 1:3))
-        z[idx[sample(1:9, blank%/%9), ]] <- 0
-      }
+  for (bi in seq(0, 6, 3)) {
+    for (bj in seq(0, 6, 3)) {
+      idx <- data.matrix(expand.grid(bi + 1:3, bj + 1:3))
+      z[idx[sample(1:9, blank %/% 9), ]] <- 0
     }
-    while (sum(!z) < blank) {
-      z[matrix(sample(9, 2), 1)] <- 0
-    }
+  }
+  while (sum(!z) < blank) {
+    z[matrix(sample(9, 2), 1)] <- 0
+  }
   z <- as.character(c(z))
   z[z == "0"] <- ""
-  canvas <- data.frame(x = rep(seq_len(9), times = 9),
-                       y = rep(seq_len(9), each = 9), z = z)
+  canvas <- data.frame(
+    x = rep(seq_len(9), times = 9),
+    y = rep(seq_len(9), each = 9), z = z
+  )
   p <- ggplot2::ggplot(data = canvas, mapping = ggplot2::aes(x = x, y = y)) +
-    ggplot2::geom_rect(xmin = canvas$x - 0.5, xmax = canvas$x + 0.5, ymin = canvas$y - 0.5, ymax = canvas$y + 0.5, fill = "#ffffff", col = "black", linewidth = 2) +
-    ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 20) +
+    ggplot2::geom_rect(xmin = canvas$x - 0.5, xmax = canvas$x + 0.5, ymin = canvas$y - 0.5, ymax = canvas$y + 0.5, fill = "#ffffff", col = "black", linewidth = 0.25) +
+    ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 5) +
+    ggplot2::annotate(geom = "rect", xmin = rep(c(0.5, 3.5, 6.5), times = 3), xmax = rep(c(3.5, 6.5, 9.5), times = 3), ymin = rep(c(0.5, 3.5, 6.5), each = 3), ymax = rep(c(3.5, 6.5, 9.5), each = 3), fill = NA, col = "black", linewidth = 0.75) +
     ggplot2::scale_x_continuous(limits = c(0.5, 9.5)) +
     ggplot2::scale_y_continuous(limits = c(0.5, 9.5)) +
     ggplot2::coord_equal() +

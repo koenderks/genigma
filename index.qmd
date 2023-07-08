@@ -34,11 +34,18 @@ if (!knitr::is_html_output()) {
     ), byrow = TRUE, nrow = 5, ncol = 5))
   }
   # Sudoku
-  for (i in c(15, 20, 30, 40, 50)) {
-    seed <- sample.int(.Machine$integer.max, 1)
-    set.seed(seed)
-    print(generate_sudoku(blank = i))
-    print(generate_sudoku(blank = 0))
+  seed <- sample.int(.Machine$integer.max, 1)
+  set.seed(seed)
+  plotList <- list()
+  for (i in 1:9) {
+    plotList[[i]] <- generate_sudoku(blank = c(20, 20, 20, 35, 35, 35, 50, 50 , 50)[i])
   }
+  gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plotList, layout_matrix = matrix(c(1:9), byrow = TRUE, nrow = 3, ncol = 3)))
+  set.seed(seed)
+  plotList <- list()
+  for (i in 1:9) {
+    plotList[[i]] <- generate_sudoku(blank = 0)
+  }
+  gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plotList, layout_matrix = matrix(c(1:9), byrow = TRUE, nrow = 3, ncol = 3)))
 }
 ```
