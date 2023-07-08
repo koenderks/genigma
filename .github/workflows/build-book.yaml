@@ -36,7 +36,7 @@ jobs:
 
       - name: Install mandarama package from GitHub
         run: |
-          install.packages("mandarama")
+          install.packages("remotes")
           remotes::install_github("koenderks/mandarama", dependencies = TRUE)
         shell: Rscript {0}
 

@@ -6,6 +6,6 @@
 
 Source code for the book MandaRama: A Renewable Mandala Coloring Book, 1st edition.
 
-- [Read online](https://koenderks.github.io/sasr/)
-- [PDF version](https://koenderks.github.io/sasr/Statistical-Audit-Sampling-with-R.pdf)
-- [ePub version](https://koenderks.github.io/sasr/Statistical-Audit-Sampling-with-R.epub)
+- [Read online](https://koenderks.github.io/mandarama/)
+- [PDF version](https://koenderks.github.io/mandarama/manarama.pdf)
+- [ePub version](https://koenderks.github.io/mandarama/manarama.epub)
