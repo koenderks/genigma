@@ -3,7 +3,7 @@ project:
   output-dir: _book
 
 book:
-  title: "MandaRama: Generative Mandalas"
+  title: "Genigma: Generative Puzzle Book"
   author:
     - name: Koen Derks
   chapters:
@@ -14,8 +14,8 @@ book:
       This book was built with <a href="https://quarto.org/">Quarto</a>.
   cover-image: front-page.svg
   favicon: front-page.png
-  site-url: https://koenderks.github.io/mandarama/
-  repo-url: https://github.com/koenderks/mandarama/
+  site-url: https://koenderks.github.io/genigma/
+  repo-url: https://github.com/koenderks/genigma/
   repo-branch: master
   repo-actions: [edit, issue]
   downloads: [pdf, epub]
