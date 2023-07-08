@@ -22,10 +22,16 @@ book:
   open-graph: true
   page-navigation: true
   reader-mode: false
+  search: false
   twitter-card:
     image: "front-page.svg"
 
 format:
+  html:
+    toc: false
+    theme:
+      - cosmo
+
   pdf:
     geometry:
       - twoside

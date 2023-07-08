@@ -16,18 +16,20 @@ source("./R/generate.R")
 Welcome to this mandala coloring book! Created using the open-source programming language R, this book is completely [free](https://www.gnu.org/philosophy/free-sw.html)! And here's the best part: if you're craving even more mandalas, just come back tomorrow. This book refreshes itself every day, offering you 32 brand-new mandalas to enjoy.
 
 ```{r echo = FALSE}
-for (i in 1:32) {
-  seed <- sample.int(.Machine$integer.max, 1)
-  set.seed(seed)
-  p1 <- generate_mandala(colors = FALSE)
-  set.seed(seed)
-  p2 <- generate_mandala(colors = TRUE)
-  gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
-    2, 2, 2, 1, 1,
-    NA, NA, NA, 1, 1
-  ), byrow = TRUE, nrow = 5, ncol = 5))
+if (!knitr::is_html_output()) {
+  for (i in seq_len(32)) {
+    seed <- sample.int(.Machine$integer.max, 1)
+    set.seed(seed)
+    p1 <- generate_mandala(colors = FALSE)
+    set.seed(seed)
+    p2 <- generate_mandala(colors = TRUE)
+    gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
+      2, 2, 2, 2, NA,
+      2, 2, 2, 2, NA,
+      2, 2, 2, 2, NA,
+      2, 2, 2, 1, 1,
+      NA, NA, NA, 1, 1
+    ), byrow = TRUE, nrow = 5, ncol = 5))
+  }
 }
 ```
