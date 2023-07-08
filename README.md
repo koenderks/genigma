@@ -7,5 +7,5 @@
 Source code for the book MandaRama: A Renewable Mandala Coloring Book, 1st edition.
 
 - [Read online](https://koenderks.github.io/mandarama/)
-- [PDF version](https://koenderks.github.io/mandarama/ManaRama.pdf)
-- [ePub version](https://koenderks.github.io/mandarama/ManaRama.epub)
+- [PDF version](https://koenderks.github.io/mandarama/MandaRama--Generative-Mandalas.pdf)
+- [ePub version](https://koenderks.github.io/mandarama/MandaRama--Generative-Mandalas.epub)

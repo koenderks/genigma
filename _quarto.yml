@@ -3,7 +3,7 @@ project:
   output-dir: _book
 
 book:
-  title: MandaRama
+  title: "MandaRama: Generative Mandalas"
   author:
     - name: Koen Derks
   chapters:
