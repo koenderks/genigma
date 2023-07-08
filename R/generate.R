@@ -6,36 +6,34 @@ extract_group <- function(tile) {
 
 generate_mandala <- function(colors = FALSE) {
   x <- y <- ptNum <- area <- bp <- NULL
-  points <- sample(10:25, size = 1)
-  radius <- runif(1, 1.1, 2.5)
-  angles <- seq(0, 2 * pi * (1 - 1 / points), length.out = points) + pi / 2
-  df <- data.frame(x = 0, y = 0)
-  for (k in seq_len(3)) {
-    temp <- data.frame()
-    for (i in seq_len(nrow(df))) {
-      new_points <- data.frame(
-        x = df[i, "x"] + radius^(k - 1) * cos(angles),
-        y = df[i, "y"] + radius^(k - 1) * sin(angles)
+  pts <- sample(10:25, size = 1)
+  rad <- runif(1, 1.1, 2.5)
+  an <- seq(0, 2 * pi * (1 - 1 / pts), length = pts) + pi / 2
+  frame <- data.frame(x = 0, y = 0)
+  for (i in seq_len(3)) {
+    tmp <- data.frame()
+    for (j in seq_len(nrow(frame))) {
+      npts <- data.frame(
+        x = frame[j, "x"] + rad^(i - 1) * cos(an),
+        y = frame[j, "y"] + rad^(i - 1) * sin(an)
       )
-      temp <- rbind(temp, new_points)
+      tmp <- rbind(tmp, npts)
     }
-    df <- temp
+    frame <- tmp
   }
-  df_polygon <- deldir::tile.list(deldir::deldir(df, sort = TRUE))
-  df_polygon <- rlist::list.filter(df_polygon, sum(bp) == 0)
-  df_polygon <- rlist::list.filter(df_polygon, length(intersect(which(x == 0), which(y == 0))) == 0)
-  df_polygon <- rlist::list.rbind(lapply(df_polygon, extract_group))
+  mandala <- deldir::tile.list(deldir::deldir(frame, sort = TRUE))
+  mandala <- rlist::list.filter(mandala, sum(bp) == 0)
+  mandala <- rlist::list.filter(mandala, length(intersect(which(x == 0), which(y == 0))) == 0)
+  mandala <- rlist::list.rbind(lapply(mandala, extract_group))
   if (!colors) {
-    df_polygon <- do.call(rbind, lapply(unique(df_polygon$ptNum), function(pt) {
-      rows <- df_polygon$ptNum == pt
-      rbind(df_polygon[rows, ], df_polygon[rows[1], ])
+    mandala <- do.call(rbind, lapply(unique(mandala$ptNum), function(pt) {
+      rows <- mandala$ptNum == pt
+      rbind(mandala[rows, ], mandala[rows[1], ])
     }))
   }
-  p <- ggplot2::ggplot(df_polygon, ggplot2::aes(x = x, y = y, group = ptNum)) +
+  p <- ggplot2::ggplot(mandala, ggplot2::aes(x = x, y = y, group = ptNum)) +
     ggplot2::geom_polygon(mapping = ggplot2::aes(fill = area, color = area, group = ptNum), show.legend = FALSE, linewidth = 0.05) +
     ggplot2::scale_color_gradientn(colors = "#000000") +
-    ggplot2::scale_x_continuous(limits = range(df_polygon$x)) +
-    ggplot2::scale_y_continuous(limits = range(df_polygon$y)) +
     ggplot2::coord_equal() +
     ggplot2::theme_void() +
     ggplot2::theme(

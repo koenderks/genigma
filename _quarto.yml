@@ -20,7 +20,7 @@ book:
   repo-actions: [edit, issue]
   downloads: [pdf, epub]
   open-graph: true
-  page-navigation: true
+  page-navigation: false
   reader-mode: false
   search: false
   twitter-card:
