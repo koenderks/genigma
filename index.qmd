@@ -10,14 +10,16 @@ knitr::opts_chunk$set(
   fig.height = 12,
   out.width = NULL
 )
-source("./R/generate.R")
+source("./R/generate_mandala.R")
+source("./R/generate_sudoku.R")
 ```
 
 Welcome to this mandala coloring book! Created using the open-source programming language R, this book is completely [free](https://www.gnu.org/philosophy/free-sw.html)! And here's the best part: if you're craving even more mandalas, just come back tomorrow. This book refreshes itself every day, offering you 32 brand-new mandalas to enjoy.
 
 ```{r echo = FALSE}
 if (!knitr::is_html_output()) {
-  for (i in seq_len(32)) {
+  # Mandala
+  for (i in seq_len(5)) {
     seed <- sample.int(.Machine$integer.max, 1)
     set.seed(seed)
     p1 <- generate_mandala(labels = TRUE)
@@ -30,6 +32,13 @@ if (!knitr::is_html_output()) {
       2, 2, 2, 1, 1,
       NA, NA, NA, 1, 1
     ), byrow = TRUE, nrow = 5, ncol = 5))
+  }
+  # Sudoku
+  for (i in c(15, 20, 30, 40, 50)) {
+    seed <- sample.int(.Machine$integer.max, 1)
+    set.seed(seed)
+    print(generate_sudoku(blank = i))
+    print(generate_sudoku(blank = 0))
   }
 }
 ```
