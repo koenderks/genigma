@@ -28,8 +28,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.61725262"
-     inkscape:cx="178.20905"
-     inkscape:cy="435.80212"
+     inkscape:cx="202.51028"
+     inkscape:cy="306.19554"
      inkscape:window-width="1512"
      inkscape:window-height="834"
      inkscape:window-x="0"
@@ -103,9 +103,9 @@
        style="font-size:80px;white-space:pre;shape-inside:url(#rect113);display:inline;mix-blend-mode:normal;fill:#293133;fill-opacity:1"><tspan
          x="1388.8809"
          y="2366.4333"
-         id="tspan10077"><tspan
+         id="tspan10027"><tspan
            style="font-family:'.New York';-inkscape-font-specification:'.New York'"
-           id="tspan10075">Koen Derks</tspan></tspan></text>
+           id="tspan10025">Koen Derks</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="scale(0.1143,0.10244537)"
@@ -120,14 +120,14 @@
        transform="scale(0.98912062,1.010999)"><tspan
          sodipodi:role="line"
          id="tspan4197"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.3135px;font-family:'Marker Felt';-inkscape-font-specification:'Marker Felt';fill:#293133;fill-opacity:1;stroke:none;stroke-width:2.61704"
+         style="font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.3135px;font-family:'Marker Felt';-inkscape-font-specification:'Marker Felt';fill:#293133;fill-opacity:1;stroke:none;stroke-width:2.61704"
          x="106.20683"
-         y="24.19219">MandaRama</tspan><tspan
+         y="24.19219">Genigma</tspan><tspan
          sodipodi:role="line"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.8508px;font-family:'Marker Felt';-inkscape-font-specification:'Marker Felt';fill:#293133;fill-opacity:1;stroke:none;stroke-width:2.61704"
          x="106.20683"
          y="46.000816"
-         id="tspan4201">Generative mandalas</tspan></text>
+         id="tspan4201">Generative Puzzles</tspan></text>
     <text
        xml:space="preserve"
        transform="scale(0.26458333)"

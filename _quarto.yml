@@ -3,7 +3,7 @@ project:
   output-dir: _book
 
 book:
-  title: "Genigma: Generative Puzzle Book"
+  title: "Genigma: Generative Puzzles"
   author:
     - name: Koen Derks
   chapters:
