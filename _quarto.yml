@@ -8,6 +8,22 @@ book:
     - name: Koen Derks
   chapters:
     - index.qmd
+  date: today
+  page-footer:
+    right: |
+      This book was built with <a href="https://quarto.org/">Quarto</a>.
+  cover-image: front-page.svg
+  favicon: front-page.png
+  site-url: https://koenderks.github.io/mandarama/
+  repo-url: https://github.com/koenderks/mandarama/
+  repo-branch: master
+  repo-actions: [edit, issue]
+  downloads: [pdf, epub]
+  open-graph: true
+  page-navigation: true
+  reader-mode: false
+  twitter-card:
+    image: "front-page.svg"
 
 format:
   pdf:

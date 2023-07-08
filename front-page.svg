@@ -27,9 +27,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.68376879"
-     inkscape:cx="238.38467"
-     inkscape:cy="451.90714"
+     inkscape:zoom="0.61725262"
+     inkscape:cx="312.67587"
+     inkscape:cy="435.80212"
      inkscape:window-width="1512"
      inkscape:window-height="834"
      inkscape:window-x="0"
@@ -89,7 +89,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#fafafa;fill-opacity:1;stroke:none;stroke-width:0.0918108"
+       style="fill:#fac764;fill-opacity:1;stroke:none;stroke-width:0.0918108"
        id="rect6077"
        width="210"
        height="210"
@@ -100,12 +100,12 @@
        xml:space="preserve"
        transform="matrix(0.16978004,0,0,0.17204301,-160.97005,-207.22239)"
        id="text111"
-       style="font-size:80px;white-space:pre;shape-inside:url(#rect113);display:inline;fill:#ffffff;fill-opacity:1"><tspan
+       style="font-size:80px;white-space:pre;shape-inside:url(#rect113);display:inline;mix-blend-mode:normal;fill:#293133;fill-opacity:1"><tspan
          x="1388.8809"
          y="2366.4333"
-         id="tspan50350"><tspan
-           style="font-family:'.New York';-inkscape-font-specification:'.New York';fill:#000000"
-           id="tspan50348">Koen Derks</tspan></tspan></text>
+         id="tspan56417"><tspan
+           style="font-family:'.New York';-inkscape-font-specification:'.New York'"
+           id="tspan56415">Koen Derks</tspan></tspan></text>
     <text
        xml:space="preserve"
        transform="scale(0.1143,0.10244537)"
@@ -113,18 +113,18 @@
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:133.333px;font-family:Papyrus;-inkscape-font-specification:Papyrus;white-space:pre;shape-inside:url(#rect655);display:inline;fill:#d40000" />
     <text
        xml:space="preserve"
-       style="font-size:17.4469px;font-family:'.New York';-inkscape-font-specification:'.New York';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:#0e0e44;stroke-width:2.61704"
+       style="font-size:17.4469px;font-family:'.New York';-inkscape-font-specification:'.New York';text-align:center;text-anchor:middle;fill:#293133;fill-opacity:1;stroke:#0e0e44;stroke-width:2.61704"
        x="106.20683"
        y="24.19219"
        id="text4199"
        transform="scale(0.98912062,1.010999)"><tspan
          sodipodi:role="line"
          id="tspan4197"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.3135px;font-family:'Marker Felt';-inkscape-font-specification:'Marker Felt';stroke:none;stroke-width:2.61704"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:17.3135px;font-family:'Marker Felt';-inkscape-font-specification:'Marker Felt';stroke:none;stroke-width:2.61704;fill:#293133;fill-opacity:1"
          x="106.20683"
          y="24.19219">Generative Mandalas</tspan><tspan
          sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.8508px;font-family:'Marker Felt';-inkscape-font-specification:'Marker Felt';stroke:none;stroke-width:2.61704"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:13.8508px;font-family:'Marker Felt';-inkscape-font-specification:'Marker Felt';stroke:none;stroke-width:2.61704;fill:#293133;fill-opacity:1"
          x="106.20683"
          y="46.000854"
          id="tspan4201">A Coloring Book</tspan></text>
