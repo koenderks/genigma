@@ -6,7 +6,7 @@ extract_group <- function(tile) {
 
 generate_mandala <- function(colors = FALSE) {
   x <- y <- ptNum <- area <- bp <- NULL
-  pts <- sample(10:25, size = 1)
+  pts <- sample(8:20, size = 1)
   rad <- runif(1, 1.1, 2.5)
   an <- seq(0, 2 * pi * (1 - 1 / pts), length = pts) + pi / 2
   frame <- data.frame(x = 0, y = 0)
@@ -25,12 +25,6 @@ generate_mandala <- function(colors = FALSE) {
   mandala <- rlist::list.filter(mandala, sum(bp) == 0)
   mandala <- rlist::list.filter(mandala, length(intersect(which(x == 0), which(y == 0))) == 0)
   mandala <- rlist::list.rbind(lapply(mandala, extract_group))
-  if (!colors) {
-    mandala <- do.call(rbind, lapply(unique(mandala$ptNum), function(pt) {
-      rows <- mandala$ptNum == pt
-      rbind(mandala[rows, ], mandala[rows[1], ])
-    }))
-  }
   p <- ggplot2::ggplot(mandala, ggplot2::aes(x = x, y = y, group = ptNum)) +
     ggplot2::geom_polygon(mapping = ggplot2::aes(fill = area, color = area, group = ptNum), show.legend = FALSE, linewidth = 0.05) +
     ggplot2::scale_color_gradientn(colors = "#000000") +
