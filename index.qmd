@@ -14,7 +14,7 @@ source("./R/generate.R")
 ```
 
 ```{r echo = FALSE}
-for (i in 1:10) {
+for (i in 1:32) {
   seed <- sample.int(.Machine$integer.max, 1)
   set.seed(seed)
   p1 <- generate_mandala(colors = FALSE)

@@ -2,35 +2,10 @@ project:
   type: book
   output-dir: _book
 
-author-meta: Koen Derks
-editor: visual
-
 book:
   title: MandaRama
   author:
     - name: Koen Derks
-      corresponding: true
-  date: today
-
-  page-footer:
-    right: |
-      This book was built with <a href="https://quarto.org/">Quarto</a>.
-  cover-image: cover.svg
-  favicon: cover.png
-  site-url: https://koenderks.github.io/mandarama/
-  repo-url: https://github.com/koenderks/mandarama/
-  repo-branch: master
-  repo-actions: [edit, issue]
-  downloads: [pdf, epub]
-  open-graph: true
-  page-navigation: true
-  reader-mode: false
-  twitter-card:
-    image: "cover.svg"
-  search:
-    limit: 20
-    collapse-after: 2
-    copy-button: true
   chapters:
     - index.qmd
 
@@ -38,10 +13,10 @@ format:
   pdf:
     geometry:
       - twoside
-      - left = 10mm
-      - right = 10mm
-      - bottom = 10mm
-      - top = 10mm
+      - left = 5mm
+      - right = 5mm
+      - bottom = 5mm
+      - top = 5mm
       - paperwidth = 210mm
       - paperheight = 210mm
     fontfamily: libertinus

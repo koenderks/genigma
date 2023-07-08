@@ -36,6 +36,7 @@ generate_mandala <- function(colors = FALSE) {
     ggplot2::scale_color_gradientn(colors = "#000000") +
     ggplot2::scale_x_continuous(limits = range(df_polygon$x)) +
     ggplot2::scale_y_continuous(limits = range(df_polygon$y)) +
+    ggplot2::coord_equal() +
     ggplot2::theme_void() +
     ggplot2::theme(
       panel.grid.major = ggplot2::element_blank(),
