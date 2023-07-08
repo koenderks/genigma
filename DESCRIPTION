@@ -17,7 +17,7 @@ Imports:
     ggplot2,
     gridExtra,
     rlist,
-    rmarkdown,
+    rmarkdown
 Language: en-US
 Encoding: UTF-8
 RoxygenNote: 7.2.3
