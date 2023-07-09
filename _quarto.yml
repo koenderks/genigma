@@ -13,7 +13,6 @@ book:
     right: |
       This book was built with <a href="https://quarto.org/">Quarto</a>.
   cover-image: front-page.svg
-  favicon: front-page.png
   site-url: https://koenderks.github.io/genigma/
   repo-url: https://github.com/koenderks/genigma/
   repo-branch: master
