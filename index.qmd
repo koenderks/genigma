@@ -646,7 +646,7 @@ if (!knitr::is_html_output()) {
 \clearpage
 
 ```{r echo = FALSE, message=FALSE, fig.height = 16}
-if (!knitr::is_html_output()) {
+if (!knitr::is_html_output() && !debug) {
   plotList <- list()
   for (i in 10:18) {
     set.seed(sudokuseeds[i])
@@ -670,7 +670,7 @@ if (!knitr::is_html_output()) {
 \clearpage
 
 ```{r echo = FALSE, message=FALSE, fig.height = 16}
-if (!knitr::is_html_output()) {
+if (!knitr::is_html_output() && !debug) {
   plotList <- list()
   for (i in 10:18) {
     set.seed(wordfinderseeds[i])
@@ -694,7 +694,7 @@ if (!knitr::is_html_output()) {
 \clearpage
 
 ```{r echo = FALSE, message=FALSE, fig.height = 16}
-if (!knitr::is_html_output()) {
+if (!knitr::is_html_output() && !debug) {
   plotList <- list()
   for (i in 10:18) {
     set.seed(crosswordseeds[i])

@@ -3,7 +3,7 @@ project:
   output-dir: _book
 
 book:
-  title: "Genigma: Generative Puzzles"
+  title: "Genigma: Generative Puzzle Book"
   author:
     - name: Koen Derks
   chapters:
@@ -47,7 +47,6 @@ format:
               \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{back-page.pdf}};
               \end{tikzpicture}%
           }
-           \renewcommand{\mainmatter}{\clearpage}
           \renewcommand{\maketitle}{}
           \renewcommand{\chapter}{}
           \usepackage{fancyhdr}
