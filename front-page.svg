@@ -28,9 +28,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.87409526"
-     inkscape:cx="157.87753"
-     inkscape:cy="409.56634"
+     inkscape:zoom="0.6574429"
+     inkscape:cx="254.01445"
+     inkscape:cy="407.63996"
      inkscape:window-width="1512"
      inkscape:window-height="834"
      inkscape:window-x="0"
@@ -169,57 +169,6 @@
        x="0"
        y="0"
        ry="0" />
-    <rect
-       style="opacity:0.113158;fill:url(#oldpaint_bitmap);fill-opacity:1;stroke:#90433b;stroke-width:0.077;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter7922)"
-       id="rect6077"
-       width="148.5"
-       height="210"
-       x="0.63434488"
-       y="0.63434488"
-       ry="0"
-       transform="scale(0.99152896,0.99399493)" />
-    <text
-       xml:space="preserve"
-       transform="scale(0.1143,0.10244537)"
-       id="text653"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:133.333px;font-family:Papyrus;-inkscape-font-specification:Papyrus;white-space:pre;shape-inside:url(#rect655);display:inline;fill:#d40000" />
-    <text
-       xml:space="preserve"
-       transform="scale(0.26458333)"
-       id="text4203"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;font-family:Papyrus;-inkscape-font-specification:Papyrus;text-align:center;white-space:pre;shape-inside:url(#rect4205);display:inline;fill:#000000;fill-opacity:1;stroke:#0e0e44;stroke-width:10" />
-    <text
-       xml:space="preserve"
-       transform="scale(0.26458333)"
-       id="text4209"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;font-family:'Apple Chancery';-inkscape-font-specification:'Apple Chancery';text-align:center;white-space:pre;shape-inside:url(#rect4211);display:inline;fill:none;fill-opacity:0.0114942;stroke:none;stroke-width:10" />
-    <text
-       xml:space="preserve"
-       style="font-size:17.0031px;font-family:'.New York';-inkscape-font-specification:'.New York';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#0e0e44;stroke-width:2.55046"
-       x="76.999161"
-       y="23.576757"
-       id="text4199"
-       transform="scale(0.96395811,1.0373895)"><tspan
-         sodipodi:role="line"
-         id="tspan4197"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:21.1667px;font-family:'Snell Roundhand';-inkscape-font-specification:'Snell Roundhand';fill:#293133;fill-opacity:1;stroke:none;stroke-width:2.55046"
-         x="76.999161"
-         y="23.576757">Genigma</tspan><tspan
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13.4984px;font-family:'Snell Roundhand';-inkscape-font-specification:'Snell Roundhand';fill:#293133;fill-opacity:1;stroke:none;stroke-width:2.55046"
-         x="76.999161"
-         y="46.617996"
-         id="tspan4201">Generative Puzzle Book</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="matrix(0.19383221,0,0,0.17204301,-229.39914,-207.22239)"
-       id="text111"
-       style="font-size:80px;white-space:pre;shape-inside:url(#rect113);display:inline;mix-blend-mode:normal;fill:#ffffff;fill-opacity:1;stroke-width:1.00212;stroke-dasharray:none"><tspan
-         x="1388.8809"
-         y="2366.4333"
-         id="tspan52837"><tspan
-           style="font-family:'.New York';-inkscape-font-specification:'.New York';fill:#293133"
-           id="tspan52835">Koen Derks</tspan></tspan></text>
     <g
        clip-path="url(#cpMC4wMHw0NTMuNTR8MC43N3w0NTIuNzc=)"
        id="g21610"
@@ -19265,5 +19214,56 @@
          style="fill:#da8541;stroke:#000000;stroke-width:0.11;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10"
          id="polygon21608" />
     </g>
+    <rect
+       style="opacity:0.2;fill:url(#oldpaint_bitmap);fill-opacity:1;stroke:#90433b;stroke-width:0.077;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter7922)"
+       id="rect6077"
+       width="148.5"
+       height="210"
+       x="0.63434488"
+       y="0.63434488"
+       ry="0"
+       transform="scale(0.99152896,0.99399493)" />
+    <text
+       xml:space="preserve"
+       transform="scale(0.1143,0.10244537)"
+       id="text653"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:133.333px;font-family:Papyrus;-inkscape-font-specification:Papyrus;white-space:pre;shape-inside:url(#rect655);display:inline;fill:#d40000" />
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text4203"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;font-family:Papyrus;-inkscape-font-specification:Papyrus;text-align:center;white-space:pre;shape-inside:url(#rect4205);display:inline;fill:#000000;fill-opacity:1;stroke:#0e0e44;stroke-width:10" />
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text4209"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;font-family:'Apple Chancery';-inkscape-font-specification:'Apple Chancery';text-align:center;white-space:pre;shape-inside:url(#rect4211);display:inline;fill:none;fill-opacity:0.0114942;stroke:none;stroke-width:10" />
+    <text
+       xml:space="preserve"
+       style="font-size:17.0031px;font-family:'.New York';-inkscape-font-specification:'.New York';text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1;stroke:#0e0e44;stroke-width:2.55046"
+       x="76.999161"
+       y="23.576757"
+       id="text4199"
+       transform="scale(0.96395811,1.0373895)"><tspan
+         sodipodi:role="line"
+         id="tspan4197"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:21.1667px;font-family:'Snell Roundhand';-inkscape-font-specification:'Snell Roundhand';fill:#293133;fill-opacity:1;stroke:none;stroke-width:2.55046"
+         x="76.999161"
+         y="23.576757">Genigma</tspan><tspan
+         sodipodi:role="line"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:13.4984px;font-family:'Snell Roundhand';-inkscape-font-specification:'Snell Roundhand';fill:#293133;fill-opacity:1;stroke:none;stroke-width:2.55046"
+         x="76.999161"
+         y="46.617996"
+         id="tspan4201">Generative Puzzle Book</tspan></text>
+    <text
+       xml:space="preserve"
+       transform="matrix(0.19383221,0,0,0.17204301,-229.39914,-207.22239)"
+       id="text111"
+       style="font-size:80px;white-space:pre;shape-inside:url(#rect113);display:inline;mix-blend-mode:normal;fill:#ffffff;fill-opacity:1;stroke-width:1.00212;stroke-dasharray:none"><tspan
+         x="1388.8809"
+         y="2366.4333"
+         id="tspan30721"><tspan
+           style="font-family:'.New York';-inkscape-font-specification:'.New York';fill:#293133"
+           id="tspan30719">Koen Derks</tspan></tspan></text>
   </g>
 </svg>
