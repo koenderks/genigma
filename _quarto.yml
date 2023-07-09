@@ -21,16 +21,14 @@ book:
   downloads: [pdf, epub]
   open-graph: true
   page-navigation: false
-  reader-mode: false
+  reader-mode: true
   search: false
   twitter-card:
     image: "front-page.svg"
 
 format:
   html:
-    toc: false
-    theme:
-      - cosmo
+    theme: cosmo
 
   pdf:
     documentclass: book

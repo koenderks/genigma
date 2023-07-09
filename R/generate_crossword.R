@@ -1,7 +1,7 @@
 # Copyright (C) 2023-2023 Koen Derks
 
 # Function to check if a word can be placed at a specific position
-checkWordPlacement <- function(word, row, col, direction, grid) {
+checkCrossWordPlacement <- function(word, row, col, direction, grid) {
   for (i in 1:nchar(word)) {
     currentRow <- row
     currentCol <- col
@@ -9,12 +9,6 @@ checkWordPlacement <- function(word, row, col, direction, grid) {
       currentCol <- col + i - 1
     } else if (direction == "vertical") {
       currentRow <- row + i - 1
-    } else if (direction == "diagonal-right") {
-      currentRow <- row + i - 1
-      currentCol <- col + i - 1
-    } else if (direction == "diagonal-left") {
-      currentRow <- row + i + 1
-      currentCol <- col - i + 1
     }
     if (currentCol < 1 || currentCol > ncol(grid) || currentRow < 1 || currentRow > nrow(grid)) {
       return(FALSE)
@@ -26,8 +20,8 @@ checkWordPlacement <- function(word, row, col, direction, grid) {
   return(TRUE)
 }
 
-# Function to generate a word search puzzle
-generate_wordfinder <- function(seed, wordlist, solution = FALSE) {
+# Function to generate a crossword puzzle
+generate_crossword <- function(seed, wordlist, solution = FALSE) {
   x <- y <- z <- NULL
   size <- 15
   words <- wordlist[nchar(wordlist) > 2 & nchar(wordlist) < 10]
@@ -37,25 +31,26 @@ generate_wordfinder <- function(seed, wordlist, solution = FALSE) {
   level <- ceiling(reqWords / 10)
   # Randomly place words horizontally, vertically, or diagonally
   while (length(usedWordsList) < reqWords && length(words) > 0) {
-    direction <- sample(c("horizontal", "vertical", "diagonal-right", "diagonal-left"), 1)
+    direction <- sample(c("horizontal", "vertical"), 1)
     validPlacement <- FALSE
     while (!validPlacement && length(words) > 0) {
       index <- sample.int(length(words), size = 1)
       word <- words[index]
       words <- words[-index]
+      syn <- syn::syn(word, n_words = 1)
+      if (length(syn) == 0) {
+        next
+      }
       if (direction == "horizontal") {
         row <- sample(1:size, 1)
         col <- sample(1:(size - nchar(word) + 1), 1)
       } else if (direction == "vertical") {
         row <- sample(1:(size - nchar(word) + 1), 1)
         col <- sample(1:size, 1)
-      } else {
-        row <- sample(1:(size - nchar(word) + 1), 1)
-        col <- sample(1:(size - nchar(word) + 1), 1)
       }
-      validPlacement <- checkWordPlacement(word, row, col, direction, grid)
+      validPlacement <- checkCrossWordPlacement(word, row, col, direction, grid)
       if (validPlacement) {
-        wordEntry <- list(word = word, x = numeric(), y = numeric())
+        wordEntry <- list(word = word, syn = syn, x = numeric(), y = numeric())
         for (i in 1:nchar(word)) {
           currentRow <- row
           currentCol <- col
@@ -63,12 +58,6 @@ generate_wordfinder <- function(seed, wordlist, solution = FALSE) {
             currentCol <- col + i - 1
           } else if (direction == "vertical") {
             currentRow <- row + i - 1
-          } else if (direction == "diagonal-right") {
-            currentRow <- row + i - 1
-            currentCol <- col + i - 1
-          } else if (direction == "diagonal-left") {
-            currentRow <- row + i + 1
-            currentCol <- col - i + 1
           }
           grid[currentRow, currentCol] <- substr(word, i, i)
           wordEntry$x <- c(wordEntry$x, currentCol)
@@ -79,15 +68,19 @@ generate_wordfinder <- function(seed, wordlist, solution = FALSE) {
     }
   }
   if (TRUE) {
-    grid[which(grid == "")] <- sample(letters, size = length(which(grid == "")), replace = TRUE)
+    grid[which(grid == "")] <- ""
   }
   canvas <- data.frame(
     x = rep(seq_len(size), times = size),
     y = rep(seq_len(size), each = size), z = c(grid)
   )
-  usedWords <- sort(unlist(lapply(usedWordsList, `[[`, 1)), decreasing = TRUE)
+  usedSyns <- unlist(lapply(usedWordsList, `[[`, 2))
+  usedWords <- unlist(lapply(usedWordsList, `[[`, 1))
+  names(usedSyns) <- seq_len(length(usedSyns))
+  # Plot small numbers in the bottom right corner of each 1x1 square
   p1 <- ggplot2::ggplot(data = canvas, mapping = ggplot2::aes(x = x, y = y)) +
     ggplot2::geom_rect(xmin = canvas$x - 0.5, xmax = canvas$x + 0.5, ymin = canvas$y - 0.5, ymax = canvas$y + 0.5, fill = "#ffffff", col = "black", linewidth = 0.25) +
+    ggplot2::geom_rect(xmin = canvas$x - 0.5, xmax = canvas$x + 0.5, ymin = canvas$y - 0.5, ymax = canvas$y + 0.5, fill = c(ifelse(grid == "", "black", NA)), col = NA, linewidth = 0.25) +
     ggplot2::geom_rect(xmin = 0.5, xmax = size + 0.5, ymin = 0.5, ymax = size + 0.5, fill = NA, col = "black", linewidth = 0.5) +
     ggplot2::scale_x_continuous(limits = c(0.5, size + 0.5)) +
     ggplot2::scale_y_continuous(limits = c(0.5, size + 0.5)) +
@@ -107,16 +100,15 @@ generate_wordfinder <- function(seed, wordlist, solution = FALSE) {
     p1 <- p1 + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 5) +
       ggplot2::ggtitle(names(seed)) +
       ggplot2::theme(plot.title = ggplot2::element_text(size = 15, face = "bold", hjust = 0.5, family = getOption("book.font.type", "sans")))
-    for (i in seq_len(length(usedWordsList))) {
-      pd <- data.frame(x = usedWordsList[[i]]$x, y = usedWordsList[[i]]$y)
-      p1 <- p1 + ggplot2::geom_line(data = pd, mapping = ggplot2::aes(x = y, y = x))
-    }
     return(p1)
   } else {
-    p1 <- p1 + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 10)
-    xs <- rep(1:4, length.out = length(usedWords))
-    ys <- rep(1:max(table(xs)), each = 4, length.out = length(usedWords))
-    p2 <- ggplot2::ggplot(data = data.frame(x = xs, y = max(ys) - ys, z = usedWords)) +
+    for (i in seq_len(length(usedWords))) {
+      word <- usedWords[i]
+      p1 <- p1 + ggplot2::annotate(geom = "text", x = usedWordsList[[i]]$y[1] - 0.35, y = usedWordsList[[i]]$x[1] + 0.35, label = i, size = 4)
+    }
+    xs <- rep(1:4, length.out = length(usedSyns))
+    ys <- rep(1:max(table(xs)), each = 4, length.out = length(usedSyns))
+    p2 <- ggplot2::ggplot(data = data.frame(x = xs, y = max(ys) - ys, z = paste0(names(usedSyns), ". ", tools::toTitleCase(usedSyns)))) +
       ggplot2::geom_text(mapping = ggplot2::aes(x = x, y = y, label = z), size = 6, hjust = 0) +
       ggplot2::scale_x_continuous(limits = c(min(xs), max(xs) + 1)) +
       ggplot2::theme_void() +
@@ -130,7 +122,7 @@ generate_wordfinder <- function(seed, wordlist, solution = FALSE) {
         axis.ticks = ggplot2::element_blank(),
         plot.margin = ggplot2::unit(c(1, 1, 1, 1), "cm"),
       )
-    title_grob <- grid::textGrob(paste0("— Word Finder ", names(seed), " ~ Level ", level, " —"), gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold"))
+    title_grob <- grid::textGrob(paste0("— Crossword ", names(seed), " ~ Level ", level, " —"), gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold"))
     return(gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(rep(2, 16), rep(1, 8)), byrow = TRUE, nrow = 6, ncol = 4), top = title_grob))
   }
 }
