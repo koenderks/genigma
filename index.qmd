@@ -33,7 +33,75 @@ if (!knitr::is_html_output()) {
     ), byrow = TRUE, nrow = 5, ncol = 5), top=grid::textGrob("Mandala", gp = grid::gpar(fontsize = 40, fontfamily = "sans", fontface = "bold")))
 }
 ```
-\newpage
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output()) {
+	set.seed(seed)
+	generate_sudoku()
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output()) {
+	set.seed(seed)
+	generate_sudoku(answers = TRUE)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output()) {
+	set.seed(seed)
+	generate_wordfinder()
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output()) {
+	set.seed(seed)
+	generate_wordfinder(answers = TRUE)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output()) {
+    seed <- sample.int(.Machine$integer.max, 1)
+	set.seed(seed)
+    p1 <- generate_mandala(labels = TRUE)
+    set.seed(seed)
+    p2 <- generate_mandala(colors = TRUE)
+    gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
+      2, 2, 2, 2, NA,
+      2, 2, 2, 2, NA,
+      2, 2, 2, 2, NA,
+      2, 2, 2, 1, 1,
+      NA, NA, NA, 1, 1
+    ), byrow = TRUE, nrow = 5, ncol = 5), top=grid::textGrob("Mandala", gp = grid::gpar(fontsize = 40, fontfamily = "sans", fontface = "bold")))
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output()) {
+    seed <- sample.int(.Machine$integer.max, 1)
+	set.seed(seed)
+    p1 <- generate_mandala(labels = TRUE)
+    set.seed(seed)
+    p2 <- generate_mandala(colors = TRUE)
+    gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
+      2, 2, 2, 2, NA,
+      2, 2, 2, 2, NA,
+      2, 2, 2, 2, NA,
+      2, 2, 2, 1, 1,
+      NA, NA, NA, 1, 1
+    ), byrow = TRUE, nrow = 5, ncol = 5), top=grid::textGrob("Mandala", gp = grid::gpar(fontsize = 40, fontfamily = "sans", fontface = "bold")))
+}
+```
+\clearpage
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
