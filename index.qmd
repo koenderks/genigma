@@ -12,16 +12,17 @@ knitr::opts_chunk$set(
 )
 source("./R/generate_mandala.R")
 source("./R/generate_sudoku.R")
+source("./R/generate_wordfinder.R")
 ```
 
 Welcome to this generative puzzle book! Created using the open-source programming language R, this book is completely [free](https://www.gnu.org/philosophy/free-sw.html)! And here's the best part: it never runs out! If you're craving more puzzles, just come back tomorrow. This book refreshes itself every day, offering you 9 brand-new mandalas and 9 sudoku to enjoy.
 
+\clearpage
+
 ```{r echo = FALSE}
 if (!knitr::is_html_output()) {
-  # Mandala
-  for (i in seq_len(9)) {
     seed <- sample.int(.Machine$integer.max, 1)
-    set.seed(seed)
+	set.seed(seed)
     p1 <- generate_mandala(labels = TRUE)
     set.seed(seed)
     p2 <- generate_mandala(colors = TRUE)
@@ -31,21 +32,40 @@ if (!knitr::is_html_output()) {
       2, 2, 2, 2, NA,
       2, 2, 2, 1, 1,
       NA, NA, NA, 1, 1
-    ), byrow = TRUE, nrow = 5, ncol = 5))
-  }
-  # Sudoku
-  seed <- sample.int(.Machine$integer.max, 1)
-  set.seed(seed)
-  plotList <- list()
-  for (i in 1:9) {
-    plotList[[i]] <- generate_sudoku(blank = c(20, 20, 20, 35, 35, 35, 50, 50 , 50)[i])
-  }
-  gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plotList, layout_matrix = matrix(c(1:9), byrow = TRUE, nrow = 3, ncol = 3)))
-  set.seed(seed)
-  plotList <- list()
-  for (i in 1:9) {
-    plotList[[i]] <- generate_sudoku(blank = 0)
-  }
-  gridExtra::grid.arrange(gridExtra::arrangeGrob(grobs = plotList, layout_matrix = matrix(c(1:9), byrow = TRUE, nrow = 3, ncol = 3)))
+    ), byrow = TRUE, nrow = 5, ncol = 5), top=grid::textGrob("Mandala", gp = grid::gpar(fontsize = 40, fontfamily = "sans", fontface = "bold")))
 }
 ```
+\clearpage
+
+```{r echo = FALSE}
+if (!knitr::is_html_output()) {
+	set.seed(seed)
+	generate_sudoku(blank = sample(c(20, 20, 20, 35, 35, 35, 50, 50 , 50), size = 1))
+}
+```
+\clearpage
+
+```{r echo = FALSE}
+if (!knitr::is_html_output()) {
+	set.seed(seed)
+	generate_sudoku(blank = 0)
+}
+```
+\clearpage
+
+```{r echo = FALSE}
+if (!knitr::is_html_output()) {
+	set.seed(seed)
+	generate_wordfinder()
+}
+```
+\clearpage
+
+```{r echo = FALSE}
+if (!knitr::is_html_output()) {
+	set.seed(seed)
+	generate_wordfinder(answers = TRUE)
+}
+```
+\clearpage
+

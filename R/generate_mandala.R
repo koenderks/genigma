@@ -52,7 +52,7 @@ generate_mandala <- function(colors = FALSE, labels = FALSE) {
     })
   }
   if (labels) {
-    p <- p + ggplot2::annotate(geom = "text", x = means_x, y = means_y, label = polygonColorIndex, size = 0.9)
+    p <- p + ggplot2::annotate(geom = "text", x = means_x, y = means_y, label = polygonColorIndex, size = 1)
   }
   return(p)
 }
