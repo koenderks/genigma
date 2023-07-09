@@ -1,1 +1,1 @@
-Sitemap: https://koenderks.github.io/mandarama/sitemap.xml
+Sitemap: https://koenderks.github.io/genigma/sitemap.xml
