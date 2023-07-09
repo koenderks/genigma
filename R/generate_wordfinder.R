@@ -27,7 +27,7 @@ checkWordPlacement <- function(word, row, col, direction, grid) {
 }
 
 # Function to generate a word search puzzle
-generate_wordfinder <- function(wordlist, solution = FALSE) {
+generate_wordfinder <- function(seed, wordlist, solution = FALSE) {
   x <- y <- z <- NULL
   size <- 15
   words <- wordlist[nchar(wordlist) > 2 & nchar(wordlist) < 10]
@@ -104,7 +104,9 @@ generate_wordfinder <- function(wordlist, solution = FALSE) {
       plot.margin = ggplot2::unit(c(1, 0, 0, 0), "cm"),
     )
   if (solution) {
-    p1 <- p1 + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 5)
+    p1 <- p1 + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 5) +
+      ggplot2::ggtitle(names(seed)) +
+      ggplot2::theme(plot.title = ggplot2::element_text(size = 15, face = "bold", hjust = 0.5, family = getOption("book.font.type", "sans")))
     for (i in seq_len(length(usedWordsList))) {
       pd <- data.frame(x = usedWordsList[[i]]$x, y = usedWordsList[[i]]$y)
       p1 <- p1 + ggplot2::geom_line(data = pd, mapping = ggplot2::aes(x = y, y = x))
@@ -127,7 +129,7 @@ generate_wordfinder <- function(wordlist, solution = FALSE) {
         axis.ticks = ggplot2::element_blank(),
         plot.margin = ggplot2::unit(c(1, 1, 1, 1), "cm"),
       )
-    title_grob <- grid::textGrob(paste0("— Word Finder ~ Level ", level, " —"), gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold"))
+    title_grob <- grid::textGrob(paste0("— Word Finder ", names(seed), " ~ Level ", level, " —"), gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold"))
     return(gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(rep(2, 16), rep(1, 8)), byrow = TRUE, nrow = 6, ncol = 4), top = title_grob))
   }
 }

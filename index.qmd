@@ -11,11 +11,13 @@ knitr::opts_chunk$set(
 source("./R/generate_mandala.R")
 source("./R/generate_sudoku.R")
 source("./R/generate_wordfinder.R")
-sysfonts::font_add_google("Dancing Script")
+try({
+  sysfonts::font_add_google("Dancing Script")
+})
 showtext::showtext_auto()
 options(book.font.type = "Dancing Script")
 wordlist <- readLines("https://www.mit.edu/~ecprice/wordlist.10000")
-debug <- TRUE
+debug <- FALSE
 ```
 
 ::: {.content-visible when-format="html"}
@@ -24,8 +26,11 @@ Welcome to this generative puzzle book! Created using the open-source programmin
 
 ```{r echo = FALSE, message=FALSE}
 mandalaseeds <- sample.int(.Machine$integer.max, 9)
+names(mandalaseeds) <- 1:9
 sudokuseeds <- sample.int(.Machine$integer.max, 18)
+names(sudokuseeds) <- 1:18
 wordfinderseeds <- sample.int(.Machine$integer.max, 18)
+names(wordfinderseeds) <- 1:18
 ```
 
 ```{r echo = FALSE, message=FALSE}
@@ -49,7 +54,7 @@ if (!knitr::is_html_output()) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
   set.seed(sudokuseeds[1])
-  generate_sudoku()
+  generate_sudoku(sudokuseeds[1])
 }
 ```
 \clearpage
@@ -57,7 +62,23 @@ if (!knitr::is_html_output()) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
   set.seed(wordfinderseeds[1])
-  generate_wordfinder(wordlist)
+  generate_wordfinder(wordfinderseeds[1], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(sudokuseeds[2])
+  generate_sudoku(sudokuseeds[2])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(wordfinderseeds[2])
+  generate_wordfinder(wordfinderseeds[2], wordlist)
 }
 ```
 \clearpage
@@ -70,9 +91,9 @@ if (!knitr::is_html_output() && !debug) {
   set.seed(seed)
   p2 <- generate_mandala(colors = TRUE)
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
     2, 2, 2, 1, 1,
     NA, NA, NA, 1, 1
   ), byrow = TRUE, nrow = 5, ncol = 5), top = grid::textGrob("— Mandala —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
@@ -82,16 +103,32 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(sudokuseeds[2])
-  generate_sudoku()
+  set.seed(sudokuseeds[3])
+  generate_sudoku(sudokuseeds[3])
 }
 ```
 \clearpage
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(wordfinderseeds[2])
-  generate_wordfinder(wordlist)
+  set.seed(wordfinderseeds[3])
+  generate_wordfinder(wordfinderseeds[3], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(sudokuseeds[4])
+  generate_sudoku(sudokuseeds[4])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(wordfinderseeds[4])
+  generate_wordfinder(wordfinderseeds[4], wordlist)
 }
 ```
 \clearpage
@@ -104,27 +141,44 @@ if (!knitr::is_html_output() && !debug) {
   set.seed(seed)
   p2 <- generate_mandala(colors = TRUE)
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
-    2, 2, 2, 2,
-    2, 2, 2, 2,
-    2, 2, 1, 1,
-    2, 2, 1, 1,
-  ), byrow = TRUE, nrow = 4, ncol = 4), top = grid::textGrob("— Mandala —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 1, 1,
+    NA, NA, NA, 1, 1
+  ), byrow = TRUE, nrow = 5, ncol = 5), top = grid::textGrob("— Mandala —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
 ```
 \clearpage
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(sudokuseeds[3])
-  generate_sudoku()
+  set.seed(sudokuseeds[5])
+  generate_sudoku(sudokuseeds[5])
 }
 ```
 \clearpage
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(wordfinderseeds[3])
-  generate_wordfinder(wordlist)
+  set.seed(wordfinderseeds[5])
+  generate_wordfinder(wordfinderseeds[5], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(sudokuseeds[6])
+  generate_sudoku(sudokuseeds[6])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(wordfinderseeds[6])
+  generate_wordfinder(wordfinderseeds[6], wordlist)
 }
 ```
 \clearpage
@@ -137,9 +191,9 @@ if (!knitr::is_html_output() && !debug) {
   set.seed(seed)
   p2 <- generate_mandala(colors = TRUE)
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
     2, 2, 2, 1, 1,
     NA, NA, NA, 1, 1
   ), byrow = TRUE, nrow = 5, ncol = 5), top = grid::textGrob("— Mandala —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
@@ -149,16 +203,32 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(sudokuseeds[4])
-  generate_sudoku()
+  set.seed(sudokuseeds[7])
+  generate_sudoku(sudokuseeds[7])
 }
 ```
 \clearpage
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(wordfinderseeds[4])
-  generate_wordfinder(wordlist)
+  set.seed(wordfinderseeds[7])
+  generate_wordfinder(wordfinderseeds[7], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(sudokuseeds[8])
+  generate_sudoku(sudokuseeds[8])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(wordfinderseeds[8])
+  generate_wordfinder(wordfinderseeds[8], wordlist)
 }
 ```
 \clearpage
@@ -171,9 +241,9 @@ if (!knitr::is_html_output() && !debug) {
   set.seed(seed)
   p2 <- generate_mandala(colors = TRUE)
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
     2, 2, 2, 1, 1,
     NA, NA, NA, 1, 1
   ), byrow = TRUE, nrow = 5, ncol = 5), top = grid::textGrob("— Mandala —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
@@ -183,16 +253,32 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(sudokuseeds[5])
-  generate_sudoku()
+  set.seed(sudokuseeds[9])
+  generate_sudoku(sudokuseeds[9])
 }
 ```
 \clearpage
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(wordfinderseeds[5])
-  generate_wordfinder(wordlist)
+  set.seed(wordfinderseeds[9])
+  generate_wordfinder(wordfinderseeds[9], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(sudokuseeds[10])
+  generate_sudoku(sudokuseeds[10])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(wordfinderseeds[10])
+  generate_wordfinder(wordfinderseeds[10], wordlist)
 }
 ```
 \clearpage
@@ -205,9 +291,9 @@ if (!knitr::is_html_output() && !debug) {
   set.seed(seed)
   p2 <- generate_mandala(colors = TRUE)
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
     2, 2, 2, 1, 1,
     NA, NA, NA, 1, 1
   ), byrow = TRUE, nrow = 5, ncol = 5), top = grid::textGrob("— Mandala —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
@@ -217,16 +303,32 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(sudokuseeds[6])
-  generate_sudoku()
+  set.seed(sudokuseeds[11])
+  generate_sudoku(sudokuseeds[11])
 }
 ```
 \clearpage
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(wordfinderseeds[6])
-  generate_wordfinder(wordlist)
+  set.seed(wordfinderseeds[11])
+  generate_wordfinder(wordfinderseeds[11], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(sudokuseeds[12])
+  generate_sudoku(sudokuseeds[12])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(wordfinderseeds[12])
+  generate_wordfinder(wordfinderseeds[12], wordlist)
 }
 ```
 \clearpage
@@ -239,9 +341,9 @@ if (!knitr::is_html_output() && !debug) {
   set.seed(seed)
   p2 <- generate_mandala(colors = TRUE)
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
     2, 2, 2, 1, 1,
     NA, NA, NA, 1, 1
   ), byrow = TRUE, nrow = 5, ncol = 5), top = grid::textGrob("— Mandala —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
@@ -251,16 +353,32 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(sudokuseeds[7])
-  generate_sudoku()
+  set.seed(sudokuseeds[13])
+  generate_sudoku(sudokuseeds[13])
 }
 ```
 \clearpage
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(wordfinderseeds[7])
-  generate_wordfinder(wordlist)
+  set.seed(wordfinderseeds[13])
+  generate_wordfinder(wordfinderseeds[13], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(sudokuseeds[14])
+  generate_sudoku(sudokuseeds[14])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(wordfinderseeds[14])
+  generate_wordfinder(wordfinderseeds[14], wordlist)
 }
 ```
 \clearpage
@@ -273,9 +391,9 @@ if (!knitr::is_html_output() && !debug) {
   set.seed(seed)
   p2 <- generate_mandala(colors = TRUE)
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
     2, 2, 2, 1, 1,
     NA, NA, NA, 1, 1
   ), byrow = TRUE, nrow = 5, ncol = 5), top = grid::textGrob("— Mandala —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
@@ -285,16 +403,32 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(sudokuseeds[8])
-  generate_sudoku()
+  set.seed(sudokuseeds[15])
+  generate_sudoku(sudokuseeds[15])
 }
 ```
 \clearpage
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(wordfinderseeds[8])
-  generate_wordfinder(wordlist)
+  set.seed(wordfinderseeds[15])
+  generate_wordfinder(wordfinderseeds[15], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(sudokuseeds[16])
+  generate_sudoku(sudokuseeds[16])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(wordfinderseeds[16])
+  generate_wordfinder(wordfinderseeds[16], wordlist)
 }
 ```
 \clearpage
@@ -307,9 +441,9 @@ if (!knitr::is_html_output() && !debug) {
   set.seed(seed)
   p2 <- generate_mandala(colors = TRUE)
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
-    2, 2, 2, 2, NA,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
+    2, 2, 2, 2, 2,
     2, 2, 2, 1, 1,
     NA, NA, NA, 1, 1
   ), byrow = TRUE, nrow = 5, ncol = 5), top = grid::textGrob("— Mandala —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
@@ -319,16 +453,32 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(sudokuseeds[9])
-  generate_sudoku()
+  set.seed(sudokuseeds[17])
+  generate_sudoku(sudokuseeds[17])
 }
 ```
 \clearpage
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
-  set.seed(wordfinderseeds[9])
-  generate_wordfinder(wordlist)
+  set.seed(wordfinderseeds[17])
+  generate_wordfinder(wordfinderseeds[17], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(sudokuseeds[18])
+  generate_sudoku(sudokuseeds[18])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(wordfinderseeds[18])
+  generate_wordfinder(wordfinderseeds[18], wordlist)
 }
 ```
 \clearpage
@@ -339,7 +489,19 @@ if (!knitr::is_html_output()) {
   plotList <- list()
   for (i in 1:9) {
     set.seed(sudokuseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_sudoku(solution = TRUE)
+    plotList[[length(plotList) + 1]] <- generate_sudoku(sudokuseeds[i], solution = TRUE)
+  }
+  gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Sudoku ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE, fig.height = 16}
+if (!knitr::is_html_output()) {
+  plotList <- list()
+  for (i in 10:18) {
+    set.seed(sudokuseeds[i])
+    plotList[[length(plotList) + 1]] <- generate_sudoku(sudokuseeds[i], solution = TRUE)
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Sudoku ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
@@ -351,7 +513,19 @@ if (!knitr::is_html_output()) {
   plotList <- list()
   for (i in 1:9) {
     set.seed(wordfinderseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_wordfinder(wordlist, solution = TRUE)
+    plotList[[length(plotList) + 1]] <- generate_wordfinder(wordfinderseeds[i], wordlist, solution = TRUE)
+  }
+  gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Word Finder ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE, fig.height = 16}
+if (!knitr::is_html_output()) {
+  plotList <- list()
+  for (i in 10:18) {
+    set.seed(wordfinderseeds[i])
+    plotList[[length(plotList) + 1]] <- generate_wordfinder(wordfinderseeds[i], wordlist, solution = TRUE)
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Word Finder ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
