@@ -17,8 +17,8 @@ checkWordPlacement <- function(word, row, col, direction, grid) {
       currentCol <- col - i + 1
     }
     if (currentCol < 1 || currentCol > ncol(grid) || currentRow < 1 || currentRow > nrow(grid)) {
-		return(FALSE)
-	}
+      return(FALSE)
+    }
     if (grid[currentRow, currentCol] != "" && grid[currentRow, currentCol] != substr(word, i, i)) {
       return(FALSE)
     }
@@ -27,10 +27,9 @@ checkWordPlacement <- function(word, row, col, direction, grid) {
 }
 
 # Function to generate a word search puzzle
-generate_wordfinder <- function(answers = FALSE) {
+generate_wordfinder <- function(wordlist, solution = FALSE) {
   x <- y <- z <- NULL
   size <- 15
-  wordlist <- readLines("https://www.mit.edu/~ecprice/wordlist.10000")
   words <- wordlist[nchar(wordlist) > 2 & nchar(wordlist) < 10]
   grid <- matrix("", nrow = size, ncol = size)
   usedWordsList <- list()
@@ -89,8 +88,7 @@ generate_wordfinder <- function(answers = FALSE) {
   usedWords <- sort(unlist(lapply(usedWordsList, `[[`, 1)), decreasing = TRUE)
   p1 <- ggplot2::ggplot(data = canvas, mapping = ggplot2::aes(x = x, y = y)) +
     ggplot2::geom_rect(xmin = canvas$x - 0.5, xmax = canvas$x + 0.5, ymin = canvas$y - 0.5, ymax = canvas$y + 0.5, fill = "#ffffff", col = "black", linewidth = 0.25) +
-	ggplot2::geom_rect(xmin = 0.5, xmax = size + 0.5, ymin = 0.5, ymax = size + 0.5, fill = NA, col = "black", linewidth = 0.75) +
-    ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 5) +
+    ggplot2::geom_rect(xmin = 0.5, xmax = size + 0.5, ymin = 0.5, ymax = size + 0.5, fill = NA, col = "black", linewidth = 0.5) +
     ggplot2::scale_x_continuous(limits = c(0.5, size + 0.5)) +
     ggplot2::scale_y_continuous(limits = c(0.5, size + 0.5)) +
     ggplot2::coord_equal() +
@@ -103,28 +101,33 @@ generate_wordfinder <- function(answers = FALSE) {
       axis.title = ggplot2::element_blank(),
       axis.text = ggplot2::element_blank(),
       axis.ticks = ggplot2::element_blank(),
-      plot.margin = ggplot2::unit(rep(0, 4), "lines"),
+      plot.margin = ggplot2::unit(c(1, 0, 0, 0), "cm"),
     )
-  if (answers) {
+  if (solution) {
+    p1 <- p1 + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 5)
     for (i in seq_len(length(usedWordsList))) {
       pd <- data.frame(x = usedWordsList[[i]]$x, y = usedWordsList[[i]]$y)
       p1 <- p1 + ggplot2::geom_line(data = pd, mapping = ggplot2::aes(x = y, y = x))
     }
+    return(p1)
+  } else {
+    p1 <- p1 + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 10)
+    xs <- rep(1:5, length.out = length(usedWords))
+    ys <- rep(1:max(table(xs)), each = 5, length.out = length(usedWords))
+    p2 <- ggplot2::ggplot(data = data.frame(x = xs, y = ys, z = usedWords)) +
+      ggplot2::geom_text(mapping = ggplot2::aes(x = x, y = y, label = z), size = 7.5) +
+      ggplot2::theme_void() +
+      ggplot2::theme(
+        panel.grid.major = ggplot2::element_blank(),
+        panel.grid.minor = ggplot2::element_blank(),
+        panel.background = ggplot2::element_blank(),
+        panel.border = ggplot2::element_blank(),
+        axis.title = ggplot2::element_blank(),
+        axis.text = ggplot2::element_blank(),
+        axis.ticks = ggplot2::element_blank(),
+        plot.margin = ggplot2::unit(c(1, 1, 1, 1), "cm"),
+      )
+    title_grob <- grid::textGrob(paste0("— Word Finder ~ Level ", level, " —"), gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold"))
+    return(gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(rep(2, 16), rep(1, 8)), byrow = TRUE, nrow = 6, ncol = 4), top = title_grob))
   }
-  p2 <- ggplot2::ggplot(data = data.frame(x = 1, y = seq_len(length(usedWords)), z = usedWords)) +
-    ggplot2::geom_text(mapping = ggplot2::aes(x = x, y = y, label = z, hjust = 0), size = 6) +
-    ggplot2::theme_void() +
-    ggplot2::theme(
-      panel.grid.major = ggplot2::element_blank(),
-      panel.grid.minor = ggplot2::element_blank(),
-      panel.background = ggplot2::element_blank(),
-      panel.border = ggplot2::element_blank(),
-      axis.title = ggplot2::element_blank(),
-      axis.text = ggplot2::element_blank(),
-      axis.ticks = ggplot2::element_blank(),
-      plot.margin = ggplot2::unit(c(1, 0, 1, -2), "cm"),
-    )
-  title <- if (answers) "Solution" else paste0("Word Finder (Level ", level, ")")
-  title_grob <- grid::textGrob(title, gp = grid::gpar(fontsize = 40, fontfamily = "sans", fontface = "bold"))
-  return(gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(rep(1, 5), rep(2, 20)), nrow = 5), top = title_grob))
 }

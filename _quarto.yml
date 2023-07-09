@@ -63,7 +63,7 @@ format:
       - left = 5mm
       - right = 5mm
       - bottom = 10mm
-      - top = 10mm
+      - top = 12.5mm
       - paperwidth = 148.5mm
       - paperheight = 210mm
       - includefoot
