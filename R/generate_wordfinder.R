@@ -9,10 +9,16 @@ checkWordPlacement <- function(word, row, col, direction, grid) {
       currentCol <- col + i - 1
     } else if (direction == "vertical") {
       currentRow <- row + i - 1
-    } else {
+    } else if (direction == "diagonal-right") {
       currentRow <- row + i - 1
       currentCol <- col + i - 1
+    } else if (direction == "diagonal-left") {
+      currentRow <- row + i + 1
+      currentCol <- col - i + 1
     }
+    if (currentCol < 1 || currentCol > ncol(grid) || currentRow < 1 || currentRow > nrow(grid)) {
+		return(FALSE)
+	}
     if (grid[currentRow, currentCol] != "" && grid[currentRow, currentCol] != substr(word, i, i)) {
       return(FALSE)
     }
@@ -32,7 +38,7 @@ generate_wordfinder <- function(answers = FALSE) {
   level <- ceiling(reqWords / 10)
   # Randomly place words horizontally, vertically, or diagonally
   while (length(usedWordsList) < reqWords && length(words) > 0) {
-    direction <- sample(c("horizontal", "vertical", "diagonal"), 1)
+    direction <- sample(c("horizontal", "vertical", "diagonal-right", "diagonal-left"), 1)
     validPlacement <- FALSE
     while (!validPlacement && length(words) > 0) {
       index <- sample.int(length(words), size = 1)
@@ -58,9 +64,12 @@ generate_wordfinder <- function(answers = FALSE) {
             currentCol <- col + i - 1
           } else if (direction == "vertical") {
             currentRow <- row + i - 1
-          } else {
+          } else if (direction == "diagonal-right") {
             currentRow <- row + i - 1
             currentCol <- col + i - 1
+          } else if (direction == "diagonal-left") {
+            currentRow <- row + i + 1
+            currentCol <- col - i + 1
           }
           grid[currentRow, currentCol] <- substr(word, i, i)
           wordEntry$x <- c(wordEntry$x, currentCol)
@@ -114,7 +123,7 @@ generate_wordfinder <- function(answers = FALSE) {
       axis.ticks = ggplot2::element_blank(),
       plot.margin = ggplot2::unit(c(1, 0, 1, -2), "cm"),
     )
-  title <- if (answers) "Solution" else paste0("Wordfinder\nLevel ", level)
+  title <- if (answers) "Solution" else paste0("Word Finder (Level ", level, ")")
   title_grob <- grid::textGrob(title, gp = grid::gpar(fontsize = 40, fontfamily = "sans", fontface = "bold"))
   return(gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(rep(1, 5), rep(2, 20)), nrow = 5), top = title_grob))
 }

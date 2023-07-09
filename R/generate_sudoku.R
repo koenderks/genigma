@@ -1,8 +1,8 @@
 # Copyright (C) 2023-2023 Koen Derks
 
 generate_sudoku <- function(answers = FALSE) {
-  blank <- sample(10:50, size = 1)
-  level <- floor(blank / 10)
+  blank <- sample(20:70, size = 1)
+  level <- floor((blank - 10) / 10)
   if (answers) {
     blank <- 0
   }
@@ -50,7 +50,7 @@ generate_sudoku <- function(answers = FALSE) {
   if (blank == 0) {
 	p <- p + ggplot2::ggtitle("Solution")
   } else {
-	p <- p + ggplot2::ggtitle("Sudoku", subtitle = paste0("Level ", level))
+	p <- p + ggplot2::ggtitle(paste0("Sudoku (Level ", level, ")"))
   }
   return(p)
 }
