@@ -28,8 +28,10 @@ generate_wordfinder <- function(answers = FALSE) {
   words <- wordlist[nchar(wordlist) > 2 & nchar(wordlist) < 10]
   grid <- matrix("", nrow = size, ncol = size)
   usedWordsList <- list()
+  reqWords <- sample(20:50, size = 1)
+  level <- ceiling(reqWords / 10)
   # Randomly place words horizontally, vertically, or diagonally
-  while (length(usedWordsList) < 40) {
+  while (length(usedWordsList) < reqWords && length(words) > 0) {
     direction <- sample(c("horizontal", "vertical", "diagonal"), 1)
     validPlacement <- FALSE
     while (!validPlacement && length(words) > 0) {
@@ -112,7 +114,7 @@ generate_wordfinder <- function(answers = FALSE) {
       axis.ticks = ggplot2::element_blank(),
       plot.margin = ggplot2::unit(c(1, 0, 1, -2), "cm"),
     )
-  title <- if (answers) "Wordfinder: Solution" else "Wordfinder"
+  title <- if (answers) "Solution" else paste0("Wordfinder\nLevel ", level)
   title_grob <- grid::textGrob(title, gp = grid::gpar(fontsize = 40, fontfamily = "sans", fontface = "bold"))
   return(gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(rep(1, 5), rep(2, 20)), nrow = 5), top = title_grob))
 }

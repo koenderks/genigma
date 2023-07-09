@@ -1,6 +1,4 @@
 ```{r echo = FALSE}
-options(width = 77)
-
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
@@ -15,11 +13,11 @@ source("./R/generate_sudoku.R")
 source("./R/generate_wordfinder.R")
 ```
 
+::: {.content-visible when-format="html"}
 Welcome to this generative puzzle book! Created using the open-source programming language R, this book is completely [free](https://www.gnu.org/philosophy/free-sw.html)! And here's the best part: it never runs out! If you're craving more puzzles, just come back tomorrow. This book refreshes itself every day, offering you 9 brand-new mandalas and 9 sudoku to enjoy.
+:::
 
-\clearpage
-
-```{r echo = FALSE}
+```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
     seed <- sample.int(.Machine$integer.max, 1)
 	set.seed(seed)
@@ -35,25 +33,25 @@ if (!knitr::is_html_output()) {
     ), byrow = TRUE, nrow = 5, ncol = 5), top=grid::textGrob("Mandala", gp = grid::gpar(fontsize = 40, fontfamily = "sans", fontface = "bold")))
 }
 ```
-\clearpage
+\newpage
 
-```{r echo = FALSE}
+```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
 	set.seed(seed)
-	generate_sudoku(blank = sample(c(20, 20, 20, 35, 35, 35, 50, 50 , 50), size = 1))
+	generate_sudoku()
 }
 ```
 \clearpage
 
-```{r echo = FALSE}
+```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
 	set.seed(seed)
-	generate_sudoku(blank = 0)
+	generate_sudoku(answers = TRUE)
 }
 ```
 \clearpage
 
-```{r echo = FALSE}
+```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
 	set.seed(seed)
 	generate_wordfinder()
@@ -61,7 +59,7 @@ if (!knitr::is_html_output()) {
 ```
 \clearpage
 
-```{r echo = FALSE}
+```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
 	set.seed(seed)
 	generate_wordfinder(answers = TRUE)

@@ -1,6 +1,11 @@
 # Copyright (C) 2023-2023 Koen Derks
 
-generate_sudoku <- function(blank = 50) {
+generate_sudoku <- function(answers = FALSE) {
+  blank <- sample(10:50, size = 1)
+  level <- floor(blank / 10)
+  if (answers) {
+    blank <- 0
+  }
   z <- y <- z <- NULL
   z <- c(1:9, 4:9, 1:3, 7:9, 1:6, 2:9, 1, 5:9, 1:4, 8:9, 1:7, 3:9, 1:2, 6:9, 1:5, 9, 1:8)
   z <- matrix(sample(9)[z], 9, 9)
@@ -39,12 +44,13 @@ generate_sudoku <- function(blank = 50) {
       axis.text = ggplot2::element_blank(),
       axis.ticks = ggplot2::element_blank(),
       plot.margin = ggplot2::unit(rep(0, 4), "lines"),
-	  plot.title = ggplot2::element_text(size = 40, family = "sans", face = "bold", hjust = 0.5)
+	  plot.title = ggplot2::element_text(size = 40, face = "bold", hjust = 0.5, family = "sans"),
+	  plot.subtitle = ggplot2::element_text(size = 40, face = "bold", hjust = 0.5, family = "sans")
     )
   if (blank == 0) {
-	p <- p + ggplot2::ggtitle("Sudoku: Solution")
+	p <- p + ggplot2::ggtitle("Solution")
   } else {
-	p <- p + ggplot2::ggtitle("Sudoku")
+	p <- p + ggplot2::ggtitle("Sudoku", subtitle = paste0("Level ", level))
   }
   return(p)
 }

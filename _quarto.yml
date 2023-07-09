@@ -33,14 +33,34 @@ format:
       - cosmo
 
   pdf:
+    documentclass: book
+    include-in-header:
+      - text: |
+          \pagenumbering{arabic}
+          \usepackage{tikz}
+          \renewcommand{\maketitle}{%
+              \thispagestyle{empty}%
+              \begin{tikzpicture}[remember picture,overlay]
+              \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{front-page.pdf}};
+              \end{tikzpicture}%
+          }
+          \AtEndDocument{\thispagestyle{empty}\begin{tikzpicture}[remember picture,overlay]
+          \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{back-page.pdf}};
+          \end{tikzpicture}}
+          \usepackage{fancyhdr}
+          \pagestyle{fancy}
+          \renewcommand{\headrulewidth}{0pt} % Remove header line
+          \fancyhf{}
+          \fancyfoot[C]{\thepage}
     geometry:
       - twoside
       - left = 5mm
       - right = 5mm
-      - bottom = 15mm
-      - top = 15mm
+      - bottom = 10mm
+      - top = 10mm
       - paperwidth = 148.5mm
       - paperheight = 210mm
+      - includefoot
     fontfamily: libertinus
     toc: false
     number-sections: false
