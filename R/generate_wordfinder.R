@@ -89,6 +89,7 @@ generate_wordfinder <- function(answers = FALSE) {
   usedWords <- sort(unlist(lapply(usedWordsList, `[[`, 1)), decreasing = TRUE)
   p1 <- ggplot2::ggplot(data = canvas, mapping = ggplot2::aes(x = x, y = y)) +
     ggplot2::geom_rect(xmin = canvas$x - 0.5, xmax = canvas$x + 0.5, ymin = canvas$y - 0.5, ymax = canvas$y + 0.5, fill = "#ffffff", col = "black", linewidth = 0.25) +
+	ggplot2::geom_rect(xmin = 0.5, xmax = size + 0.5, ymin = 0.5, ymax = size + 0.5, fill = NA, col = "black", linewidth = 0.75) +
     ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 5) +
     ggplot2::scale_x_continuous(limits = c(0.5, size + 0.5)) +
     ggplot2::scale_y_continuous(limits = c(0.5, size + 0.5)) +
