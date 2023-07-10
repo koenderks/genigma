@@ -30,7 +30,7 @@ generate_sudoku <- function(seed, type = c("puzzle", "solution", "example")) {
   )
   p <- ggplot2::ggplot(data = canvas, mapping = ggplot2::aes(x = x, y = y)) +
     ggplot2::geom_rect(xmin = canvas$x - 0.5, xmax = canvas$x + 0.5, ymin = canvas$y - 0.5, ymax = canvas$y + 0.5, fill = "#ffffff", col = "black", linewidth = 0.25) +
-    ggplot2::annotate(geom = "rect", xmin = rep(c(0.5, 3.5, 6.5), times = 3), xmax = rep(c(3.5, 6.5, 9.5), times = 3), ymin = rep(c(0.5, 3.5, 6.5), each = 3), ymax = rep(c(3.5, 6.5, 9.5), each = 3), fill = NA, col = "black", linewidth = 0.75) +
+    ggplot2::annotate(geom = "rect", xmin = rep(c(0.5, 3.5, 6.5), times = 3), xmax = rep(c(3.5, 6.5, 9.5), times = 3), ymin = rep(c(0.5, 3.5, 6.5), each = 3), ymax = rep(c(3.5, 6.5, 9.5), each = 3), fill = NA, col = "black", linewidth = 1.25) +
     ggplot2::scale_x_continuous(limits = c(0.5, 9.5)) +
     ggplot2::scale_y_continuous(limits = c(0.5, 9.5)) +
     ggplot2::coord_equal() +
