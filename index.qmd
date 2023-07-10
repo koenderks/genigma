@@ -12,6 +12,7 @@ source("./R/mandala.R")
 source("./R/sudoku.R")
 source("./R/wordfinder.R")
 source("./R/crossword.R")
+source("./R/tictactoe.R")
 source("./R/instruction.R")
 try({
   sysfonts::font_add_google("Dancing Script")
@@ -49,12 +50,15 @@ if (!knitr::is_html_output()) {
   p6 <- .instruction("Word Finder", "Locate and strike through all words in the puzzle. Words may\nappear vertically, horizontally, or diagonally. Note that letters\ncan be part of multiple words.")
   p7 <- crossword(NULL, wordlist, type = "example")
   p8 <- .instruction("Crossword", "Fill in the synonyms of the words in the list at their corresponding\npositions in the puzzle.")
-  gridExtra::grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, layout_matrix = matrix(c(
+  p9 <- tictactoe(type = "example")
+  p10 <- .instruction("Tic Tac Toe", "Players take turns putting an x or an o mark in an empty square.\nThe first player to get 3 of their marks in a row is the winner. When\nall squares are full and there is no winner, the game ends in a tie.")
+  gridExtra::grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, layout_matrix = matrix(c(
     1, 2, 2,
     4, 4, 3,
     5, 6, 6,
-    8, 8, 7
-  ), byrow = TRUE, nrow = 4, ncol = 3), top = grid::textGrob("— Instructions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
+    8, 8, 7,
+    9, 10, 10
+  ), byrow = TRUE, nrow = 5, ncol = 3), top = grid::textGrob("— Instructions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
 ```
 \clearpage
@@ -121,6 +125,17 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[2])
   crossword(crosswordseeds[2], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE, fig.height = 16}
+if (!knitr::is_html_output()) {
+  plotList <- list()
+  for (i in 1:12) {
+    plotList[[length(plotList) + 1]] <- tictactoe()
+  }
+  gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:12, byrow = TRUE, nrow = 4, ncol = 3), top = grid::textGrob("— Tic Tac Toe —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
 ```
 \clearpage
@@ -257,6 +272,17 @@ if (!knitr::is_html_output() && !debug) {
 ```
 \clearpage
 
+```{r echo = FALSE, message=FALSE, fig.height = 16}
+if (!knitr::is_html_output() && !debug) {
+  plotList <- list()
+  for (i in 1:12) {
+    plotList[[length(plotList) + 1]] <- tictactoe()
+  }
+  gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:12, byrow = TRUE, nrow = 4, ncol = 3), top = grid::textGrob("— Tic Tac Toe —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
+}
+```
+\clearpage
+
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[4]
@@ -389,6 +415,17 @@ if (!knitr::is_html_output() && !debug) {
 ```
 \clearpage
 
+```{r echo = FALSE, message=FALSE, fig.height = 16}
+if (!knitr::is_html_output() && !debug) {
+  plotList <- list()
+  for (i in 1:12) {
+    plotList[[length(plotList) + 1]] <- tictactoe()
+  }
+  gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:12, byrow = TRUE, nrow = 4, ncol = 3), top = grid::textGrob("— Tic Tac Toe —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
+}
+```
+\clearpage
+
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[6]
@@ -517,6 +554,17 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[14])
   crossword(crosswordseeds[14], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE, fig.height = 16}
+if (!knitr::is_html_output() && !debug) {
+  plotList <- list()
+  for (i in 1:12) {
+    plotList[[length(plotList) + 1]] <- tictactoe()
+  }
+  gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:12, byrow = TRUE, nrow = 4, ncol = 3), top = grid::textGrob("— Tic Tac Toe —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
 ```
 \clearpage

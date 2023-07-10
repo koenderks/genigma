@@ -20,8 +20,8 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
   words <- wordlist[nchar(wordlist) > 2 & nchar(wordlist) < 10]
   grid <- matrix("", nrow = size, ncol = size)
   usedWordsList <- list()
-  reqWords <- sample(20:50, size = 1)
-  level <- ceiling(reqWords / 10)
+  reqWords <- sample(26:50, size = 1)
+  level <- ceiling((reqWords - 25) / 5)
   while (length(usedWordsList) < reqWords && length(words) > 0) {
     direction <- sample(c("horizontal", "vertical"), 1)
     validPlacement <- FALSE
@@ -96,7 +96,7 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
     p1 <- p1 + ggplot2::theme(plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm"))
     for (i in seq_len(length(usedWords))) {
       word <- usedWords[i]
-      p1 <- p1 + ggplot2::annotate(geom = "text", x = usedWordsList[[i]]$y[1] - 0.3, y = usedWordsList[[i]]$x[1] + 0.3, label = i, size = 2) +
+      p1 <- p1 + ggplot2::annotate(geom = "text", x = usedWordsList[[i]]$y[1] - 0.3, y = usedWordsList[[i]]$x[1] + 0.3, label = i, size = 1.5) +
         ggplot2::annotate(geom = "text", x = usedWordsList[[1]]$y, y = usedWordsList[[1]]$x, label = strsplit(usedWordsList[[1]]$word, split = "")[[1]], size = 4)
     }
     return(p1)
