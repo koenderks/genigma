@@ -13,6 +13,7 @@ source("./R/sudoku.R")
 source("./R/wordfinder.R")
 source("./R/crossword.R")
 source("./R/tictactoe.R")
+source("./R/nonogram.R")
 source("./R/instruction.R")
 try({
   sysfonts::font_add_google("Dancing Script")
@@ -20,11 +21,11 @@ try({
 showtext::showtext_auto()
 options(book.font.type = "Dancing Script")
 wordlist <- readLines("https://www.mit.edu/~ecprice/wordlist.10000")
-debug <- FALSE
+debug <- TRUE
 ```
 
 ::: {.content-visible when-format="html"}
-Welcome to this generative puzzle book! Created using the open-source programming language R, this book is completely [free](https://www.gnu.org/philosophy/free-sw.html)! And here's the best part: it never runs out! If you're craving more puzzles, just come back tomorrow. This book refreshes itself every day, generating 9 brand-new mandalas, 18 sudoku, 18 word finders, and 18 crossword puzzles for you to enjoy.
+Welcome to this generative puzzle book! Created using the open-source programming language R, this book is completely [free](https://www.gnu.org/philosophy/free-sw.html)! And here's the best part: it never runs out! If you're craving more puzzles, just come back tomorrow. This book refreshes itself every day, generating 9 brand-new mandalas, 18 sudoku, 18 word finders, 18 crossword puzzles and 18 nonograms for you to enjoy.
 
 Click [here](https://koenderks.github.io/genigma/Genigma--Generative-Puzzle-Book.pdf) to download today's unique puzzle book!
 :::
@@ -38,6 +39,8 @@ wordfinderseeds <- sample.int(.Machine$integer.max, 18)
 names(wordfinderseeds) <- 1:18
 crosswordseeds <- sample.int(.Machine$integer.max, 18)
 names(crosswordseeds) <- 1:18
+nonogramseeds <- sample.int(.Machine$integer.max, 18)
+names(nonogramseeds) <- 1:18
 ```
 
 ```{r echo = FALSE, message=FALSE}
@@ -50,15 +53,18 @@ if (!knitr::is_html_output()) {
   p6 <- .instruction("Word Finder", "Locate and strike through all words in the puzzle. Words may\nappear vertically, horizontally, or diagonally and in any direction.\nNote that letters may be part of multiple words.")
   p7 <- crossword(NULL, wordlist, type = "example")
   p8 <- .instruction("Crossword", "Fill in the synonyms of the words in the list at their corresponding\npositions in the puzzle. Words only appear horizontally or vertically\nand in reading direction.")
-  p9 <- tictactoe(type = "example")
-  p10 <- .instruction("Tic Tac Toe", "Players take turns putting an 'X' or an 'O' mark in an empty square.\nThe first player to get 3 of their marks in a row is the winner. When\nall squares are full and there is no winner, the game ends in a tie.")
-  gridExtra::grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, layout_matrix = matrix(c(
+  p9 <- nonogram(NULL, type = "example")
+  p10 <- .instruction("Nonogram", "The objective is to fill the grid and reveal the hidden picture.\nClues are provided along the edges of the grid, indicating the\nconsecutive groups of filled cells in each row and column.")
+  p11 <- tictactoe(type = "example")
+  p12 <- .instruction("Tic Tac Toe", "Players take turns putting an 'X' or an 'O' mark in an empty square.\nThe first player to get 3 of their marks in a row is the winner. When\nall squares are full and there is no winner, the game ends in a tie.")
+  gridExtra::grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, layout_matrix = matrix(c(
     1, 2, 2,
     4, 4, 3,
     5, 6, 6,
     8, 8, 7,
-    9, 10, 10
-  ), byrow = TRUE, nrow = 5, ncol = 3), top = grid::textGrob("— Instructions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
+    9, 10, 10,
+    12, 12, 11
+  ), byrow = TRUE, nrow = 6, ncol = 3), top = grid::textGrob("— Instructions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
 ```
 \clearpage
@@ -106,6 +112,14 @@ if (!knitr::is_html_output()) {
 \clearpage
 
 ```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output()) {
+  set.seed(nonogramseeds[1])
+  nonogram(nonogramseeds[1])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[2])
   sudoku(sudokuseeds[2])
@@ -125,6 +139,14 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[2])
   crossword(crosswordseeds[2], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[2])
+  nonogram(nonogramseeds[2])
 }
 ```
 \clearpage
@@ -184,6 +206,14 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[3])
+  nonogram(nonogramseeds[3])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[4])
   sudoku(sudokuseeds[4])
 }
@@ -202,6 +232,14 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[4])
   crossword(crosswordseeds[4], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[4])
+  nonogram(nonogramseeds[4])
 }
 ```
 \clearpage
@@ -250,6 +288,14 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[5])
+  nonogram(nonogramseeds[5])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[6])
   sudoku(sudokuseeds[6])
 }
@@ -268,6 +314,14 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[6])
   crossword(crosswordseeds[6], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[6])
+  nonogram(nonogramseeds[6])
 }
 ```
 \clearpage
@@ -327,6 +381,14 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[7])
+  nonogram(nonogramseeds[7])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[8])
   sudoku(sudokuseeds[8])
 }
@@ -345,6 +407,14 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[8])
   crossword(crosswordseeds[8], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[8])
+  nonogram(nonogramseeds[8])
 }
 ```
 \clearpage
@@ -393,6 +463,14 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[9])
+  nonogram(nonogramseeds[9])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[10])
   sudoku(sudokuseeds[10])
 }
@@ -411,6 +489,14 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[10])
   crossword(crosswordseeds[10], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[10])
+  nonogram(nonogramseeds[10])
 }
 ```
 \clearpage
@@ -470,6 +556,14 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[11])
+  nonogram(nonogramseeds[11])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[12])
   sudoku(sudokuseeds[12])
 }
@@ -488,6 +582,14 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[12])
   crossword(crosswordseeds[12], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[12])
+  nonogram(nonogramseeds[12])
 }
 ```
 \clearpage
@@ -536,6 +638,14 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[13])
+  nonogram(nonogramseeds[13])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[14])
   sudoku(sudokuseeds[14])
 }
@@ -554,6 +664,14 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[14])
   crossword(crosswordseeds[14], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[14])
+  nonogram(nonogramseeds[14])
 }
 ```
 \clearpage
@@ -613,6 +731,14 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[15])
+  nonogram(nonogramseeds[15])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[16])
   sudoku(sudokuseeds[16])
 }
@@ -631,6 +757,14 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[16])
   crossword(crosswordseeds[16], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[16])
+  nonogram(nonogramseeds[16])
 }
 ```
 \clearpage
@@ -679,6 +813,14 @@ if (!knitr::is_html_output() && !debug) {
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[17])
+  nonogram(nonogramseeds[17])
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[18])
   sudoku(sudokuseeds[18])
 }
@@ -697,6 +839,14 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[18])
   crossword(crosswordseeds[18], wordlist)
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output() && !debug) {
+  set.seed(nonogramseeds[18])
+  nonogram(nonogramseeds[18])
 }
 ```
 \clearpage
@@ -770,6 +920,30 @@ if (!knitr::is_html_output() && !debug) {
     plotList[[length(plotList) + 1]] <- crossword(crosswordseeds[i], wordlist, type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Crossword ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE, fig.height = 16}
+if (!knitr::is_html_output()) {
+  plotList <- list()
+  for (i in 1:9) {
+    set.seed(nonogramseeds[i])
+    plotList[[length(plotList) + 1]] <- nonogram(nonogramseeds[i], type = "solution")
+  }
+  gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Nonogram ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE, fig.height = 16}
+if (!knitr::is_html_output() && !debug) {
+  plotList <- list()
+  for (i in 10:18) {
+    set.seed(nonogramseeds[i])
+    plotList[[length(plotList) + 1]] <- nonogram(nonogramseeds[i], type = "solution")
+  }
+  gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Nonogram ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
 ```
 \clearpage

@@ -98,7 +98,7 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
     for (i in seq_len(length(usedWords))) {
       word <- usedWords[i]
       p1 <- p1 + ggplot2::annotate(geom = "text", x = usedWordsList[[i]]$x[1] - 0.3, y = usedWordsList[[i]]$y[1] + 0.3, label = i, size = 1.5) +
-        ggplot2::annotate(geom = "text", x = usedWordsList[[1]]$x, y = usedWordsList[[1]]$y, label = strsplit(usedWordsList[[1]]$word, split = "")[[1]], size = 4)
+        ggplot2::annotate(geom = "text", x = usedWordsList[[1]]$x, y = usedWordsList[[1]]$y, label = strsplit(usedWordsList[[1]]$word, split = "")[[1]], size = 3)
     }
     return(p1)
   } else {

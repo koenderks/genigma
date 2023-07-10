@@ -64,7 +64,7 @@ sudoku <- function(seed, type = c("puzzle", "solution", "example")) {
       ggplot2::theme(plot.margin = ggplot2::unit(c(1, 0, 21 - 13.5 - 1, 0), "cm")) +
       ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 15)
   } else if (type == "example") {
-    p <- p + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 7.5) +
+    p <- p + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 6.5) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm"))
   } else {
     p <- p + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 7.5) +

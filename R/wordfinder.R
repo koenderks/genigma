@@ -104,7 +104,7 @@ wordfinder <- function(seed, wordlist, type = c("puzzle", "solution", "example")
     }
     return(p1)
   } else if (type == "example") {
-    p1 <- p1 + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 5) +
+    p1 <- p1 + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 4) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm"))
     for (i in seq_len(3)) {
       pd <- data.frame(x = usedWordsList[[i]]$x, y = usedWordsList[[i]]$y)
