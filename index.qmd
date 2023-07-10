@@ -12,6 +12,7 @@ source("./R/generate_mandala.R")
 source("./R/generate_sudoku.R")
 source("./R/generate_wordfinder.R")
 source("./R/generate_crossword.R")
+source("./R/generate_instruction.R")
 try({
   sysfonts::font_add_google("Dancing Script")
 })
@@ -40,11 +41,31 @@ names(crosswordseeds) <- 1:18
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
+  p1 <- generate_mandala(type = "example")
+  p2 <- generate_instruction("Mandala", "Color the mandala according to the example provided.")
+  p3 <- generate_sudoku(NULL, type = "example")
+  p4 <- generate_instruction("Sudoku", "Fill in the blank squares so that each row, each column and each\n3-by-3 block contains all of the digits 1 to 9.")
+  p5 <- generate_wordfinder(NULL, wordlist, type = "example")
+  p6 <- generate_instruction("Word Finder", "Locate and strike through all words in the puzzle. Words may\nappear vertically, horizontally, or diagonally. Note that letters\ncan be part of multiple words.")
+  p7 <- generate_crossword(NULL, wordlist, type = "example")
+  p8 <- generate_instruction("Crossword", "Fill in the synonyms of the words in the list at their corresponding\npositions in the puzzle.")
+  gridExtra::grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, layout_matrix = matrix(c(
+    1, 2, 2,
+    4, 4, 3,
+    5, 6, 6,
+    8, 8, 7
+  ), byrow = TRUE, nrow = 4, ncol = 3), top = grid::textGrob("— Instructions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
+}
+```
+\clearpage
+
+```{r echo = FALSE, message=FALSE}
+if (!knitr::is_html_output()) {
   seed <- mandalaseeds[1]
   set.seed(seed)
-  p1 <- generate_mandala(labels = FALSE)
+  p1 <- generate_mandala()
   set.seed(seed)
-  p2 <- generate_mandala(colors = TRUE)
+  p2 <- generate_mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -108,9 +129,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[2]
   set.seed(seed)
-  p1 <- generate_mandala(labels = FALSE)
+  p1 <- generate_mandala()
   set.seed(seed)
-  p2 <- generate_mandala(colors = TRUE)
+  p2 <- generate_mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -174,9 +195,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[3]
   set.seed(seed)
-  p1 <- generate_mandala(labels = FALSE)
+  p1 <- generate_mandala()
   set.seed(seed)
-  p2 <- generate_mandala(colors = TRUE)
+  p2 <- generate_mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -240,9 +261,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[4]
   set.seed(seed)
-  p1 <- generate_mandala(labels = FALSE)
+  p1 <- generate_mandala()
   set.seed(seed)
-  p2 <- generate_mandala(colors = TRUE)
+  p2 <- generate_mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -306,9 +327,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[5]
   set.seed(seed)
-  p1 <- generate_mandala(labels = FALSE)
+  p1 <- generate_mandala()
   set.seed(seed)
-  p2 <- generate_mandala(colors = TRUE)
+  p2 <- generate_mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -372,9 +393,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[6]
   set.seed(seed)
-  p1 <- generate_mandala(labels = FALSE)
+  p1 <- generate_mandala()
   set.seed(seed)
-  p2 <- generate_mandala(colors = TRUE)
+  p2 <- generate_mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -438,9 +459,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[7]
   set.seed(seed)
-  p1 <- generate_mandala(labels = FALSE)
+  p1 <- generate_mandala()
   set.seed(seed)
-  p2 <- generate_mandala(colors = TRUE)
+  p2 <- generate_mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -504,9 +525,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[8]
   set.seed(seed)
-  p1 <- generate_mandala(labels = FALSE)
+  p1 <- generate_mandala()
   set.seed(seed)
-  p2 <- generate_mandala(colors = TRUE)
+  p2 <- generate_mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -570,9 +591,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[9]
   set.seed(seed)
-  p1 <- generate_mandala(labels = FALSE)
+  p1 <- generate_mandala()
   set.seed(seed)
-  p2 <- generate_mandala(colors = TRUE)
+  p2 <- generate_mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -638,7 +659,7 @@ if (!knitr::is_html_output()) {
   plotList <- list()
   for (i in 1:9) {
     set.seed(sudokuseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_sudoku(sudokuseeds[i], solution = TRUE)
+    plotList[[length(plotList) + 1]] <- generate_sudoku(sudokuseeds[i], type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Sudoku ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
@@ -650,7 +671,7 @@ if (!knitr::is_html_output() && !debug) {
   plotList <- list()
   for (i in 10:18) {
     set.seed(sudokuseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_sudoku(sudokuseeds[i], solution = TRUE)
+    plotList[[length(plotList) + 1]] <- generate_sudoku(sudokuseeds[i], type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Sudoku ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
@@ -662,7 +683,7 @@ if (!knitr::is_html_output()) {
   plotList <- list()
   for (i in 1:9) {
     set.seed(wordfinderseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_wordfinder(wordfinderseeds[i], wordlist, solution = TRUE)
+    plotList[[length(plotList) + 1]] <- generate_wordfinder(wordfinderseeds[i], wordlist, type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Word Finder ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
@@ -674,7 +695,7 @@ if (!knitr::is_html_output() && !debug) {
   plotList <- list()
   for (i in 10:18) {
     set.seed(wordfinderseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_wordfinder(wordfinderseeds[i], wordlist, solution = TRUE)
+    plotList[[length(plotList) + 1]] <- generate_wordfinder(wordfinderseeds[i], wordlist, type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Word Finder ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
@@ -686,7 +707,7 @@ if (!knitr::is_html_output()) {
   plotList <- list()
   for (i in 1:9) {
     set.seed(crosswordseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_crossword(crosswordseeds[i], wordlist, solution = TRUE)
+    plotList[[length(plotList) + 1]] <- generate_crossword(crosswordseeds[i], wordlist, type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Crossword ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
@@ -698,7 +719,7 @@ if (!knitr::is_html_output() && !debug) {
   plotList <- list()
   for (i in 10:18) {
     set.seed(crosswordseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_crossword(crosswordseeds[i], wordlist, solution = TRUE)
+    plotList[[length(plotList) + 1]] <- generate_crossword(crosswordseeds[i], wordlist, type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Crossword ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }

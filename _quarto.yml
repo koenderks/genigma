@@ -47,6 +47,7 @@ format:
               \node at (current page.center) {\includegraphics[width=\paperwidth,height=\paperheight,keepaspectratio]{back-page.pdf}};
               \end{tikzpicture}%
           }
+          \renewcommand{\mainmatter}{\clearpage}
           \renewcommand{\maketitle}{}
           \renewcommand{\chapter}{}
           \usepackage{fancyhdr}
@@ -63,6 +64,5 @@ format:
       - paperwidth = 148.5mm
       - paperheight = 210mm
       - includefoot
-    fontfamily: libertinus
     toc: false
     number-sections: false

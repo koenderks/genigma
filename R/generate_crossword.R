@@ -1,27 +1,7 @@
 # Copyright (C) 2023-2023 Koen Derks
 
-# Function to check if a word can be placed at a specific position
-checkCrossWordPlacement <- function(word, row, col, direction, grid) {
-  for (i in 1:nchar(word)) {
-    currentRow <- row
-    currentCol <- col
-    if (direction == "horizontal") {
-      currentCol <- col + i - 1
-    } else if (direction == "vertical") {
-      currentRow <- row + i - 1
-    }
-    if (currentCol < 1 || currentCol > ncol(grid) || currentRow < 1 || currentRow > nrow(grid)) {
-      return(FALSE)
-    }
-    if (grid[currentRow, currentCol] != "" && grid[currentRow, currentCol] != substr(word, i, i)) {
-      return(FALSE)
-    }
-  }
-  return(TRUE)
-}
-
-# Function to generate a crossword puzzle
-generate_crossword <- function(seed, wordlist, solution = FALSE) {
+generate_crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example")) {
+  type <- match.arg(type)
   x <- y <- z <- NULL
   size <- 15
   words <- wordlist[nchar(wordlist) > 2 & nchar(wordlist) < 10]
@@ -29,7 +9,6 @@ generate_crossword <- function(seed, wordlist, solution = FALSE) {
   usedWordsList <- list()
   reqWords <- sample(20:50, size = 1)
   level <- ceiling(reqWords / 10)
-  # Randomly place words horizontally, vertically, or diagonally
   while (length(usedWordsList) < reqWords && length(words) > 0) {
     direction <- sample(c("horizontal", "vertical"), 1)
     validPlacement <- FALSE
@@ -96,10 +75,18 @@ generate_crossword <- function(seed, wordlist, solution = FALSE) {
       axis.ticks = ggplot2::element_blank(),
       plot.margin = ggplot2::unit(c(1, 0, 0, 0), "cm"),
     )
-  if (solution) {
+  if (type == "solution") {
     p1 <- p1 + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 5) +
       ggplot2::ggtitle(names(seed)) +
-      ggplot2::theme(plot.title = ggplot2::element_text(size = 15, face = "bold", hjust = 0.5, family = getOption("book.font.type", "sans")))
+      ggplot2::theme(plot.title = ggplot2::element_text(size = 20, face = "bold", hjust = 0.5, family = getOption("book.font.type", "sans")))
+    return(p1)
+  } else if (type == "example") {
+    p1 <- p1 + ggplot2::theme(plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm"))
+    for (i in seq_len(length(usedWords))) {
+      word <- usedWords[i]
+      p1 <- p1 + ggplot2::annotate(geom = "text", x = usedWordsList[[i]]$y[1] - 0.3, y = usedWordsList[[i]]$x[1] + 0.3, label = i, size = 2) +
+        ggplot2::annotate(geom = "text", x = usedWordsList[[1]]$y, y = usedWordsList[[1]]$x, label = strsplit(usedWordsList[[1]]$word, split = "")[[1]], size = 4)
+    }
     return(p1)
   } else {
     for (i in seq_len(length(usedWords))) {
@@ -125,4 +112,24 @@ generate_crossword <- function(seed, wordlist, solution = FALSE) {
     title_grob <- grid::textGrob(paste0("— Crossword ", names(seed), " ~ Level ", level, " —"), gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold"))
     return(gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(rep(2, 16), rep(1, 8)), byrow = TRUE, nrow = 6, ncol = 4), top = title_grob))
   }
+}
+
+# Function to check if a word can be placed at a specific position
+checkCrossWordPlacement <- function(word, row, col, direction, grid) {
+  for (i in 1:nchar(word)) {
+    currentRow <- row
+    currentCol <- col
+    if (direction == "horizontal") {
+      currentCol <- col + i - 1
+    } else if (direction == "vertical") {
+      currentRow <- row + i - 1
+    }
+    if (currentCol < 1 || currentCol > ncol(grid) || currentRow < 1 || currentRow > nrow(grid)) {
+      return(FALSE)
+    }
+    if (grid[currentRow, currentCol] != "" && grid[currentRow, currentCol] != substr(word, i, i)) {
+      return(FALSE)
+    }
+  }
+  return(TRUE)
 }

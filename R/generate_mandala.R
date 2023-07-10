@@ -1,10 +1,7 @@
 # Copyright (C) 2023-2023 Koen Derks
 
-extract_group <- function(tile) {
-  as.data.frame(rlist::list.match(tile, "ptNum|x|y|area"))
-}
-
-generate_mandala <- function(colors = FALSE, labels = FALSE) {
+generate_mandala <- function(type = c("puzzle", "solution", "example")) {
+  type <- match.arg(type)
   x <- y <- ptNum <- area <- bp <- NULL
   pts <- sample(8:11, size = 1)
   rad <- runif(1, 1.1, 2.5)
@@ -41,19 +38,17 @@ generate_mandala <- function(colors = FALSE, labels = FALSE) {
       axis.title = ggplot2::element_blank(),
       axis.text = ggplot2::element_blank(),
       axis.ticks = ggplot2::element_blank(),
-      plot.margin = ggplot2::unit(c(2, 0, 0, 2), "cm"),
+      plot.margin = ggplot2::unit(c(2, 0, 0, 2), "cm")
     )
-  cols <- aggregate(ggplot2::ggplot_build(p)$data[[1]]$fill, list(ggplot2::ggplot_build(p)$data[[1]]$group), unique)[, 2]
-  polygonColorIndex <- as.character(as.numeric(factor(cols, levels = unique(cols))))
-  polygonColorIndex[which(cols == "#ffffff")] <- ""
-  if (!colors) {
+  if (type == "puzzle" || type == "example") {
     suppressMessages({
       p <- p + ggplot2::scale_fill_gradientn(colors = "#ffffff") +
-        ggplot2::theme(plot.margin = ggplot2::unit(rep(0.2, 4), "cm"), )
+        ggplot2::theme(plot.margin = ggplot2::unit(rep(0.2, 4), "cm"))
     })
   }
-  if (labels) {
-    p <- p + ggplot2::annotate(geom = "text", x = means_x, y = means_y, label = polygonColorIndex, size = 1.5)
-  }
   return(p)
+}
+
+extract_group <- function(tile) {
+  as.data.frame(rlist::list.match(tile, "ptNum|x|y|area"))
 }

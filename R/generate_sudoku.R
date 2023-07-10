@@ -1,9 +1,10 @@
 # Copyright (C) 2023-2023 Koen Derks
 
-generate_sudoku <- function(seed, solution = FALSE) {
+generate_sudoku <- function(seed, type = c("puzzle", "solution", "example")) {
+  type <- match.arg(type)
   blank <- sample(20:70, size = 1)
   level <- floor((blank - 10) / 10)
-  if (solution) {
+  if (type == "solution") {
     blank <- 0
   }
   z <- y <- z <- NULL
@@ -45,14 +46,17 @@ generate_sudoku <- function(seed, solution = FALSE) {
       plot.margin = ggplot2::unit(c(1, 0, 0, 0), "cm"),
       plot.title = ggplot2::element_text(size = 75, face = "bold", hjust = 0.5, family = getOption("book.font.type", "sans"))
     )
-  if (!solution) {
+  if (type == "puzzle") {
     p <- p + ggplot2::ggtitle(paste0("— Sudoku ", names(seed), " ~ Level ", level, " —")) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(1, 0, 21 - 13.5 - 1, 0), "cm")) +
       ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 15)
+  } else if (type == "example") {
+    p <- p + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 7.5) +
+      ggplot2::theme(plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm"))
   } else {
     p <- p + ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 7.5) +
       ggplot2::ggtitle(names(seed)) +
-      ggplot2::theme(plot.title = ggplot2::element_text(size = 15, face = "bold", hjust = 0.5, family = getOption("book.font.type", "sans")))
+      ggplot2::theme(plot.title = ggplot2::element_text(size = 20, face = "bold", hjust = 0.5, family = getOption("book.font.type", "sans")))
   }
   return(p)
 }
