@@ -20,7 +20,7 @@ try({
 showtext::showtext_auto()
 options(book.font.type = "Dancing Script")
 wordlist <- readLines("https://www.mit.edu/~ecprice/wordlist.10000")
-debug <- TRUE
+debug <- FALSE
 ```
 
 ::: {.content-visible when-format="html"}
@@ -49,7 +49,7 @@ if (!knitr::is_html_output()) {
   p5 <- wordfinder(NULL, wordlist, type = "example")
   p6 <- .instruction("Word Finder", "Locate and strike through all words in the puzzle. Words may\nappear vertically, horizontally, or diagonally and in any direction.\nNote that letters may be part of multiple words.")
   p7 <- crossword(NULL, wordlist, type = "example")
-  p8 <- .instruction("Crossword", "Fill in the synonyms of the words in the list at their corresponding\npositions in the puzzle.")
+  p8 <- .instruction("Crossword", "Fill in the synonyms of the words in the list at their corresponding\npositions in the puzzle. Words only appear horizontally or vertically\nand in reading direction.")
   p9 <- tictactoe(type = "example")
   p10 <- .instruction("Tic Tac Toe", "Players take turns putting an 'X' or an 'O' mark in an empty square.\nThe first player to get 3 of their marks in a row is the winner. When\nall squares are full and there is no winner, the game ends in a tie.")
   gridExtra::grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, layout_matrix = matrix(c(
