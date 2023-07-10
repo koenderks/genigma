@@ -21,7 +21,7 @@ try({
 showtext::showtext_auto()
 options(book.font.type = "Dancing Script")
 wordlist <- readLines("https://www.mit.edu/~ecprice/wordlist.10000")
-debug <- TRUE
+debug <- FALSE
 ```
 
 ::: {.content-visible when-format="html"}
