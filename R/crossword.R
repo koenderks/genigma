@@ -44,14 +44,15 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
       if (validPlacement) {
         wordEntry <- list(word = word, syn = syn, x = numeric(), y = numeric())
         for (i in 1:nchar(word)) {
-          currentRow <- row
-          currentCol <- col
-          if (direction == "horizontal") {
-            currentCol <- col + i - 1
-          } else if (direction == "vertical") {
-            currentRow <- row + i - 1
-          }
-          grid[currentRow, currentCol] <- substr(word, i, i)
+          currentCol <- switch(direction,
+            "horizontal" = col + i - 1,
+            "vertical" = col
+          )
+          currentRow <- switch(direction,
+            "horizontal" = row,
+            "vertical" = row - i - 1
+          )
+          grid[currentCol, currentRow] <- substr(word, i, i)
           wordEntry$x <- c(wordEntry$x, currentCol)
           wordEntry$y <- c(wordEntry$y, currentRow)
         }
@@ -96,14 +97,14 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
     p1 <- p1 + ggplot2::theme(plot.margin = ggplot2::unit(c(0, 0, 0, 0), "cm"))
     for (i in seq_len(length(usedWords))) {
       word <- usedWords[i]
-      p1 <- p1 + ggplot2::annotate(geom = "text", x = usedWordsList[[i]]$y[1] - 0.3, y = usedWordsList[[i]]$x[1] + 0.3, label = i, size = 1.5) +
-        ggplot2::annotate(geom = "text", x = usedWordsList[[1]]$y, y = usedWordsList[[1]]$x, label = strsplit(usedWordsList[[1]]$word, split = "")[[1]], size = 4)
+      p1 <- p1 + ggplot2::annotate(geom = "text", x = usedWordsList[[i]]$x[1] - 0.3, y = usedWordsList[[i]]$y[1] + 0.3, label = i, size = 1.5) +
+        ggplot2::annotate(geom = "text", x = usedWordsList[[1]]$x, y = usedWordsList[[1]]$y, label = strsplit(usedWordsList[[1]]$word, split = "")[[1]], size = 4)
     }
     return(p1)
   } else {
     for (i in seq_len(length(usedWords))) {
       word <- usedWords[i]
-      p1 <- p1 + ggplot2::annotate(geom = "text", x = usedWordsList[[i]]$y[1] - 0.35, y = usedWordsList[[i]]$x[1] + 0.35, label = i, size = 4)
+      p1 <- p1 + ggplot2::annotate(geom = "text", x = usedWordsList[[i]]$x[1] - 0.35, y = usedWordsList[[i]]$y[1] + 0.35, label = i, size = 4)
     }
     xs <- rep(1:4, length.out = length(usedSyns))
     ys <- rep(1:max(table(xs)), each = 4, length.out = length(usedSyns))
@@ -128,17 +129,18 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
 
 .checkCrossWordPlacement <- function(word, row, col, direction, grid) {
   for (i in 1:nchar(word)) {
-    currentRow <- row
-    currentCol <- col
-    if (direction == "horizontal") {
-      currentCol <- col + i - 1
-    } else if (direction == "vertical") {
-      currentRow <- row + i - 1
-    }
+    currentCol <- switch(direction,
+      "horizontal" = col + i - 1,
+      "vertical" = col
+    )
+    currentRow <- switch(direction,
+      "horizontal" = row,
+      "vertical" = row - i - 1
+    )
     if (currentCol < 1 || currentCol > ncol(grid) || currentRow < 1 || currentRow > nrow(grid)) {
       return(FALSE)
     }
-    if (grid[currentRow, currentCol] != "" && grid[currentRow, currentCol] != substr(word, i, i)) {
+    if (grid[currentCol, currentRow] != "" && grid[currentCol, currentRow] != substr(word, i, i)) {
       return(FALSE)
     }
   }
