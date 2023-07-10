@@ -64,9 +64,7 @@ wordfinder <- function(seed, wordlist, type = c("puzzle", "solution", "example")
       }
     }
   }
-  if (TRUE) {
-    grid[which(grid == "")] <- sample(letters, size = length(which(grid == "")), replace = TRUE)
-  }
+  grid[which(grid == "")] <- sample(letters, size = length(which(grid == "")), replace = TRUE)
   canvas <- data.frame(
     x = rep(seq_len(size), times = size),
     y = rep(seq_len(size), each = size), z = c(grid)
