@@ -8,11 +8,11 @@ knitr::opts_chunk$set(
   fig.height = 18.75,
   out.width = NULL
 )
-source("./R/generate_mandala.R")
-source("./R/generate_sudoku.R")
-source("./R/generate_wordfinder.R")
-source("./R/generate_crossword.R")
-source("./R/generate_instruction.R")
+source("./R/mandala.R")
+source("./R/sudoku.R")
+source("./R/wordfinder.R")
+source("./R/crossword.R")
+source("./R/instruction.R")
 try({
   sysfonts::font_add_google("Dancing Script")
 })
@@ -41,14 +41,14 @@ names(crosswordseeds) <- 1:18
 
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
-  p1 <- generate_mandala(type = "example")
-  p2 <- generate_instruction("Mandala", "Color the mandala according to the example provided.")
-  p3 <- generate_sudoku(NULL, type = "example")
-  p4 <- generate_instruction("Sudoku", "Fill in the blank squares so that each row, each column and each\n3-by-3 block contains all of the digits 1 to 9.")
-  p5 <- generate_wordfinder(NULL, wordlist, type = "example")
-  p6 <- generate_instruction("Word Finder", "Locate and strike through all words in the puzzle. Words may\nappear vertically, horizontally, or diagonally. Note that letters\ncan be part of multiple words.")
-  p7 <- generate_crossword(NULL, wordlist, type = "example")
-  p8 <- generate_instruction("Crossword", "Fill in the synonyms of the words in the list at their corresponding\npositions in the puzzle.")
+  p1 <- mandala(type = "example")
+  p2 <- .instruction("Mandala", "Color the mandala according to the example provided.")
+  p3 <- sudoku(NULL, type = "example")
+  p4 <- .instruction("Sudoku", "Fill in the blank squares so that each row, each column and each\n3-by-3 block contains all of the digits 1 to 9.")
+  p5 <- wordfinder(NULL, wordlist, type = "example")
+  p6 <- .instruction("Word Finder", "Locate and strike through all words in the puzzle. Words may\nappear vertically, horizontally, or diagonally. Note that letters\ncan be part of multiple words.")
+  p7 <- crossword(NULL, wordlist, type = "example")
+  p8 <- .instruction("Crossword", "Fill in the synonyms of the words in the list at their corresponding\npositions in the puzzle.")
   gridExtra::grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, layout_matrix = matrix(c(
     1, 2, 2,
     4, 4, 3,
@@ -63,9 +63,9 @@ if (!knitr::is_html_output()) {
 if (!knitr::is_html_output()) {
   seed <- mandalaseeds[1]
   set.seed(seed)
-  p1 <- generate_mandala()
+  p1 <- mandala()
   set.seed(seed)
-  p2 <- generate_mandala(type = "solution")
+  p2 <- mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -80,7 +80,7 @@ if (!knitr::is_html_output()) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
   set.seed(sudokuseeds[1])
-  generate_sudoku(sudokuseeds[1])
+  sudoku(sudokuseeds[1])
 }
 ```
 \clearpage
@@ -88,7 +88,7 @@ if (!knitr::is_html_output()) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
   set.seed(wordfinderseeds[1])
-  generate_wordfinder(wordfinderseeds[1], wordlist)
+  wordfinder(wordfinderseeds[1], wordlist)
 }
 ```
 \clearpage
@@ -96,7 +96,7 @@ if (!knitr::is_html_output()) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output()) {
   set.seed(crosswordseeds[1])
-  generate_crossword(crosswordseeds[1], wordlist)
+  crossword(crosswordseeds[1], wordlist)
 }
 ```
 \clearpage
@@ -104,7 +104,7 @@ if (!knitr::is_html_output()) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[2])
-  generate_sudoku(sudokuseeds[2])
+  sudoku(sudokuseeds[2])
 }
 ```
 \clearpage
@@ -112,7 +112,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[2])
-  generate_wordfinder(wordfinderseeds[2], wordlist)
+  wordfinder(wordfinderseeds[2], wordlist)
 }
 ```
 \clearpage
@@ -120,7 +120,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[2])
-  generate_crossword(crosswordseeds[2], wordlist)
+  crossword(crosswordseeds[2], wordlist)
 }
 ```
 \clearpage
@@ -129,9 +129,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[2]
   set.seed(seed)
-  p1 <- generate_mandala()
+  p1 <- mandala()
   set.seed(seed)
-  p2 <- generate_mandala(type = "solution")
+  p2 <- mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -146,7 +146,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[3])
-  generate_sudoku(sudokuseeds[3])
+  sudoku(sudokuseeds[3])
 }
 ```
 \clearpage
@@ -154,7 +154,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[3])
-  generate_wordfinder(wordfinderseeds[3], wordlist)
+  wordfinder(wordfinderseeds[3], wordlist)
 }
 ```
 \clearpage
@@ -162,7 +162,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[3])
-  generate_crossword(crosswordseeds[3], wordlist)
+  crossword(crosswordseeds[3], wordlist)
 }
 ```
 \clearpage
@@ -170,7 +170,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[4])
-  generate_sudoku(sudokuseeds[4])
+  sudoku(sudokuseeds[4])
 }
 ```
 \clearpage
@@ -178,7 +178,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[4])
-  generate_wordfinder(wordfinderseeds[4], wordlist)
+  wordfinder(wordfinderseeds[4], wordlist)
 }
 ```
 \clearpage
@@ -186,7 +186,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[4])
-  generate_crossword(crosswordseeds[4], wordlist)
+  crossword(crosswordseeds[4], wordlist)
 }
 ```
 \clearpage
@@ -195,9 +195,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[3]
   set.seed(seed)
-  p1 <- generate_mandala()
+  p1 <- mandala()
   set.seed(seed)
-  p2 <- generate_mandala(type = "solution")
+  p2 <- mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -212,7 +212,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[5])
-  generate_sudoku(sudokuseeds[5])
+  sudoku(sudokuseeds[5])
 }
 ```
 \clearpage
@@ -220,7 +220,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[5])
-  generate_wordfinder(wordfinderseeds[5], wordlist)
+  wordfinder(wordfinderseeds[5], wordlist)
 }
 ```
 \clearpage
@@ -228,7 +228,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[5])
-  generate_crossword(crosswordseeds[5], wordlist)
+  crossword(crosswordseeds[5], wordlist)
 }
 ```
 \clearpage
@@ -236,7 +236,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[6])
-  generate_sudoku(sudokuseeds[6])
+  sudoku(sudokuseeds[6])
 }
 ```
 \clearpage
@@ -244,7 +244,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[6])
-  generate_wordfinder(wordfinderseeds[6], wordlist)
+  wordfinder(wordfinderseeds[6], wordlist)
 }
 ```
 \clearpage
@@ -252,7 +252,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[6])
-  generate_crossword(crosswordseeds[6], wordlist)
+  crossword(crosswordseeds[6], wordlist)
 }
 ```
 \clearpage
@@ -261,9 +261,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[4]
   set.seed(seed)
-  p1 <- generate_mandala()
+  p1 <- mandala()
   set.seed(seed)
-  p2 <- generate_mandala(type = "solution")
+  p2 <- mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -278,7 +278,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[7])
-  generate_sudoku(sudokuseeds[7])
+  sudoku(sudokuseeds[7])
 }
 ```
 \clearpage
@@ -286,7 +286,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[7])
-  generate_wordfinder(wordfinderseeds[7], wordlist)
+  wordfinder(wordfinderseeds[7], wordlist)
 }
 ```
 \clearpage
@@ -294,7 +294,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[7])
-  generate_crossword(crosswordseeds[7], wordlist)
+  crossword(crosswordseeds[7], wordlist)
 }
 ```
 \clearpage
@@ -302,7 +302,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[8])
-  generate_sudoku(sudokuseeds[8])
+  sudoku(sudokuseeds[8])
 }
 ```
 \clearpage
@@ -310,7 +310,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[8])
-  generate_wordfinder(wordfinderseeds[8], wordlist)
+  wordfinder(wordfinderseeds[8], wordlist)
 }
 ```
 \clearpage
@@ -318,7 +318,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[8])
-  generate_crossword(crosswordseeds[8], wordlist)
+  crossword(crosswordseeds[8], wordlist)
 }
 ```
 \clearpage
@@ -327,9 +327,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[5]
   set.seed(seed)
-  p1 <- generate_mandala()
+  p1 <- mandala()
   set.seed(seed)
-  p2 <- generate_mandala(type = "solution")
+  p2 <- mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -344,7 +344,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[9])
-  generate_sudoku(sudokuseeds[9])
+  sudoku(sudokuseeds[9])
 }
 ```
 \clearpage
@@ -352,7 +352,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[9])
-  generate_wordfinder(wordfinderseeds[9], wordlist)
+  wordfinder(wordfinderseeds[9], wordlist)
 }
 ```
 \clearpage
@@ -360,7 +360,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[9])
-  generate_crossword(crosswordseeds[9], wordlist)
+  crossword(crosswordseeds[9], wordlist)
 }
 ```
 \clearpage
@@ -368,7 +368,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[10])
-  generate_sudoku(sudokuseeds[10])
+  sudoku(sudokuseeds[10])
 }
 ```
 \clearpage
@@ -376,7 +376,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[10])
-  generate_wordfinder(wordfinderseeds[10], wordlist)
+  wordfinder(wordfinderseeds[10], wordlist)
 }
 ```
 \clearpage
@@ -384,7 +384,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[10])
-  generate_crossword(crosswordseeds[10], wordlist)
+  crossword(crosswordseeds[10], wordlist)
 }
 ```
 \clearpage
@@ -393,9 +393,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[6]
   set.seed(seed)
-  p1 <- generate_mandala()
+  p1 <- mandala()
   set.seed(seed)
-  p2 <- generate_mandala(type = "solution")
+  p2 <- mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -410,7 +410,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[11])
-  generate_sudoku(sudokuseeds[11])
+  sudoku(sudokuseeds[11])
 }
 ```
 \clearpage
@@ -418,7 +418,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[11])
-  generate_wordfinder(wordfinderseeds[11], wordlist)
+  wordfinder(wordfinderseeds[11], wordlist)
 }
 ```
 \clearpage
@@ -426,7 +426,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[11])
-  generate_crossword(crosswordseeds[11], wordlist)
+  crossword(crosswordseeds[11], wordlist)
 }
 ```
 \clearpage
@@ -434,7 +434,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[12])
-  generate_sudoku(sudokuseeds[12])
+  sudoku(sudokuseeds[12])
 }
 ```
 \clearpage
@@ -442,7 +442,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[12])
-  generate_wordfinder(wordfinderseeds[12], wordlist)
+  wordfinder(wordfinderseeds[12], wordlist)
 }
 ```
 \clearpage
@@ -450,7 +450,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[12])
-  generate_crossword(crosswordseeds[12], wordlist)
+  crossword(crosswordseeds[12], wordlist)
 }
 ```
 \clearpage
@@ -459,9 +459,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[7]
   set.seed(seed)
-  p1 <- generate_mandala()
+  p1 <- mandala()
   set.seed(seed)
-  p2 <- generate_mandala(type = "solution")
+  p2 <- mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -476,7 +476,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[13])
-  generate_sudoku(sudokuseeds[13])
+  sudoku(sudokuseeds[13])
 }
 ```
 \clearpage
@@ -484,7 +484,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[13])
-  generate_wordfinder(wordfinderseeds[13], wordlist)
+  wordfinder(wordfinderseeds[13], wordlist)
 }
 ```
 \clearpage
@@ -492,7 +492,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[13])
-  generate_crossword(crosswordseeds[13], wordlist)
+  crossword(crosswordseeds[13], wordlist)
 }
 ```
 \clearpage
@@ -500,7 +500,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[14])
-  generate_sudoku(sudokuseeds[14])
+  sudoku(sudokuseeds[14])
 }
 ```
 \clearpage
@@ -508,7 +508,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[14])
-  generate_wordfinder(wordfinderseeds[14], wordlist)
+  wordfinder(wordfinderseeds[14], wordlist)
 }
 ```
 \clearpage
@@ -516,7 +516,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[14])
-  generate_crossword(crosswordseeds[14], wordlist)
+  crossword(crosswordseeds[14], wordlist)
 }
 ```
 \clearpage
@@ -525,9 +525,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[8]
   set.seed(seed)
-  p1 <- generate_mandala()
+  p1 <- mandala()
   set.seed(seed)
-  p2 <- generate_mandala(type = "solution")
+  p2 <- mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -542,7 +542,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[15])
-  generate_sudoku(sudokuseeds[15])
+  sudoku(sudokuseeds[15])
 }
 ```
 \clearpage
@@ -550,7 +550,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[15])
-  generate_wordfinder(wordfinderseeds[15], wordlist)
+  wordfinder(wordfinderseeds[15], wordlist)
 }
 ```
 \clearpage
@@ -558,7 +558,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[15])
-  generate_crossword(crosswordseeds[15], wordlist)
+  crossword(crosswordseeds[15], wordlist)
 }
 ```
 \clearpage
@@ -566,7 +566,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[16])
-  generate_sudoku(sudokuseeds[16])
+  sudoku(sudokuseeds[16])
 }
 ```
 \clearpage
@@ -574,7 +574,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[16])
-  generate_wordfinder(wordfinderseeds[16], wordlist)
+  wordfinder(wordfinderseeds[16], wordlist)
 }
 ```
 \clearpage
@@ -582,7 +582,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[16])
-  generate_crossword(crosswordseeds[16], wordlist)
+  crossword(crosswordseeds[16], wordlist)
 }
 ```
 \clearpage
@@ -591,9 +591,9 @@ if (!knitr::is_html_output() && !debug) {
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[9]
   set.seed(seed)
-  p1 <- generate_mandala()
+  p1 <- mandala()
   set.seed(seed)
-  p2 <- generate_mandala(type = "solution")
+  p2 <- mandala(type = "solution")
   gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(
     2, 2, 2, 2, 2,
     2, 2, 2, 2, 2,
@@ -608,7 +608,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[17])
-  generate_sudoku(sudokuseeds[17])
+  sudoku(sudokuseeds[17])
 }
 ```
 \clearpage
@@ -616,7 +616,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[17])
-  generate_wordfinder(wordfinderseeds[17], wordlist)
+  wordfinder(wordfinderseeds[17], wordlist)
 }
 ```
 \clearpage
@@ -624,7 +624,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[17])
-  generate_crossword(crosswordseeds[17], wordlist)
+  crossword(crosswordseeds[17], wordlist)
 }
 ```
 \clearpage
@@ -632,7 +632,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(sudokuseeds[18])
-  generate_sudoku(sudokuseeds[18])
+  sudoku(sudokuseeds[18])
 }
 ```
 \clearpage
@@ -640,7 +640,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(wordfinderseeds[18])
-  generate_wordfinder(wordfinderseeds[18], wordlist)
+  wordfinder(wordfinderseeds[18], wordlist)
 }
 ```
 \clearpage
@@ -648,7 +648,7 @@ if (!knitr::is_html_output() && !debug) {
 ```{r echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[18])
-  generate_crossword(crosswordseeds[18], wordlist)
+  crossword(crosswordseeds[18], wordlist)
 }
 ```
 \clearpage
@@ -659,7 +659,7 @@ if (!knitr::is_html_output()) {
   plotList <- list()
   for (i in 1:9) {
     set.seed(sudokuseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_sudoku(sudokuseeds[i], type = "solution")
+    plotList[[length(plotList) + 1]] <- sudoku(sudokuseeds[i], type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Sudoku ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
@@ -671,7 +671,7 @@ if (!knitr::is_html_output() && !debug) {
   plotList <- list()
   for (i in 10:18) {
     set.seed(sudokuseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_sudoku(sudokuseeds[i], type = "solution")
+    plotList[[length(plotList) + 1]] <- sudoku(sudokuseeds[i], type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Sudoku ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
@@ -683,7 +683,7 @@ if (!knitr::is_html_output()) {
   plotList <- list()
   for (i in 1:9) {
     set.seed(wordfinderseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_wordfinder(wordfinderseeds[i], wordlist, type = "solution")
+    plotList[[length(plotList) + 1]] <- wordfinder(wordfinderseeds[i], wordlist, type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Word Finder ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
@@ -695,7 +695,7 @@ if (!knitr::is_html_output() && !debug) {
   plotList <- list()
   for (i in 10:18) {
     set.seed(wordfinderseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_wordfinder(wordfinderseeds[i], wordlist, type = "solution")
+    plotList[[length(plotList) + 1]] <- wordfinder(wordfinderseeds[i], wordlist, type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Word Finder ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
@@ -707,7 +707,7 @@ if (!knitr::is_html_output()) {
   plotList <- list()
   for (i in 1:9) {
     set.seed(crosswordseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_crossword(crosswordseeds[i], wordlist, type = "solution")
+    plotList[[length(plotList) + 1]] <- crossword(crosswordseeds[i], wordlist, type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Crossword ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
@@ -719,7 +719,7 @@ if (!knitr::is_html_output() && !debug) {
   plotList <- list()
   for (i in 10:18) {
     set.seed(crosswordseeds[i])
-    plotList[[length(plotList) + 1]] <- generate_crossword(crosswordseeds[i], wordlist, type = "solution")
+    plotList[[length(plotList) + 1]] <- crossword(crosswordseeds[i], wordlist, type = "solution")
   }
   gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Crossword ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
