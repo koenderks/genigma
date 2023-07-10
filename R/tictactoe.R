@@ -47,4 +47,3 @@ tictactoe <- function(type = c("puzzle", "example")) {
   }
   return(p)
 }
-tictactoe(type = "example")
