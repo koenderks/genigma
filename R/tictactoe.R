@@ -37,13 +37,14 @@ tictactoe <- function(type = c("puzzle", "example")) {
       plot.margin = ggplot2::unit(c(1, 0, 0, 0), "cm"),
     )
   if (type == "example") {
-    x <- c(0.25, 0.75)
-    y <- c(0.25, 0.25) + rep(0:2, each = 2)
-    xend <- c(0.75, 0.25)
-    yend <- c(0.75, 0.75) + rep(0:2, each = 2)
+    x <- c(0.25, 0.75, 0.25, 0.75, 0.25, 0.75, 1.25, 1.75, 2.25, 2.75)
+    y <- c(0.25, 0.25, 1.25, 1.25, 2.25, 2.25, 0.25, 0.25, 1.25, 1.25)
+    xend <- c(0.75, 0.25, 0.75, 0.25, 0.75, 0.25, 1.75, 1.25, 2.75, 2.25)
+    yend <- c(0.75, 0.75, 1.75, 1.75, 2.75, 2.75, 0.75, 0.75, 1.75, 1.75)
     pd <- data.frame(x = x, y = y, xend = xend, yend = yend)
     p <- p + ggplot2::geom_segment(data = pd, mapping = ggplot2::aes(x = x, y = y, xend = xend, yend = yend), linewidth = 0.5)
-    # Add circle with radius 0.5 to (1, 1), (3, 1) (2, 1)
+    circles <- data.frame(x = c(1.5, 2.5, 2.5, 1.5), y = c(1.5, 2.5, 0.5, 2.5))
+    p <- p + ggplot2::geom_point(data = circles, ggplot2::aes(x = x, y = y), size = 20, shape = 21, fill = NA, color = "black", stroke = 0.75)
   }
   return(p)
 }
