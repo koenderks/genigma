@@ -23,16 +23,16 @@ wordfinder <- function(seed, wordlist, type = c("puzzle", "solution", "example")
   reqWords <- sample(20:50, size = 1)
   level <- ceiling(reqWords / 10)
   while (length(usedWordsList) < reqWords && length(words) > 0) {
-    direction <- sample(c("horizontal", "vertical", "diagonal-right", "diagonal-left"), 1)
+    direction <- sample(c("horizontal-right", "horizontal-left", "vertical-down", "vertical-up", "diagonal-left-down", "diagonal-right-down", "diagonal-left-up", "diagonal-right-up"), 1)
     validPlacement <- FALSE
     while (!validPlacement && length(words) > 0) {
       index <- sample.int(length(words), size = 1)
       word <- words[index]
       words <- words[-index]
-      if (direction == "horizontal") {
+      if (direction == "horizontal-right" || direction == "horizontal-left") {
         row <- sample(1:size, 1)
         col <- sample(1:(size - nchar(word) + 1), 1)
-      } else if (direction == "vertical") {
+      } else if (direction == "vertical-down" || direction == "vertical-up") {
         row <- sample(1:(size - nchar(word) + 1), 1)
         col <- sample(1:size, 1)
       } else {
@@ -43,20 +43,27 @@ wordfinder <- function(seed, wordlist, type = c("puzzle", "solution", "example")
       if (validPlacement) {
         wordEntry <- list(word = word, x = numeric(), y = numeric())
         for (i in 1:nchar(word)) {
-          currentRow <- row
-          currentCol <- col
-          if (direction == "horizontal") {
-            currentCol <- col + i - 1
-          } else if (direction == "vertical") {
-            currentRow <- row + i - 1
-          } else if (direction == "diagonal-right") {
-            currentRow <- row + i - 1
-            currentCol <- col + i - 1
-          } else if (direction == "diagonal-left") {
-            currentRow <- row + i + 1
-            currentCol <- col - i + 1
-          }
-          grid[currentRow, currentCol] <- substr(word, i, i)
+          currentCol <- switch(direction,
+            "horizontal-right" = col + i - 1,
+            "horizontal-left" = col - i + 1,
+            "vertical-down" = col,
+            "vertical-up" = col,
+            "diagonal-left-down" = col - i - 1,
+            "diagonal-right-down" = col + i + 1,
+            "diagonal-left-up" = col - i - 1,
+            "diagonal-right-up" = col + i + 1
+          )
+          currentRow <- switch(direction,
+            "horizontal-right" = row,
+            "horizontal-left" = row,
+            "vertical-down" = row - i - 1,
+            "vertical-up" = row + i + 1,
+            "diagonal-left-down" = row - i - 1,
+            "diagonal-right-down" = row - i - 1,
+            "diagonal-left-up" = row + i + 1,
+            "diagonal-right-up" = row + i + 1
+          )
+          grid[currentCol, currentRow] <- substr(word, i, i)
           wordEntry$x <- c(wordEntry$x, currentCol)
           wordEntry$y <- c(wordEntry$y, currentRow)
         }
@@ -93,7 +100,7 @@ wordfinder <- function(seed, wordlist, type = c("puzzle", "solution", "example")
       ggplot2::theme(plot.title = ggplot2::element_text(size = 20, face = "bold", hjust = 0.5, family = getOption("book.font.type", "sans")))
     for (i in seq_len(length(usedWordsList))) {
       pd <- data.frame(x = usedWordsList[[i]]$x, y = usedWordsList[[i]]$y)
-      p1 <- p1 + ggplot2::geom_line(data = pd, mapping = ggplot2::aes(x = y, y = x))
+      p1 <- p1 + ggplot2::geom_line(data = pd, mapping = ggplot2::aes(x = x, y = y))
     }
     return(p1)
   } else if (type == "example") {
@@ -128,24 +135,31 @@ wordfinder <- function(seed, wordlist, type = c("puzzle", "solution", "example")
 }
 
 .checkWordFinderPlacement <- function(word, row, col, direction, grid) {
-  for (i in 1:nchar(word)) {
-    currentRow <- row
-    currentCol <- col
-    if (direction == "horizontal") {
-      currentCol <- col + i - 1
-    } else if (direction == "vertical") {
-      currentRow <- row + i - 1
-    } else if (direction == "diagonal-right") {
-      currentRow <- row + i - 1
-      currentCol <- col + i - 1
-    } else if (direction == "diagonal-left") {
-      currentRow <- row + i + 1
-      currentCol <- col - i + 1
-    }
+  for (i in seq_len(nchar(word))) {
+    currentCol <- switch(direction,
+      "horizontal-right" = col + i - 1,
+      "horizontal-left" = col - i + 1,
+      "vertical-down" = col,
+      "vertical-up" = col,
+      "diagonal-left-down" = col - i - 1,
+      "diagonal-right-down" = col + i + 1,
+      "diagonal-left-up" = col - i - 1,
+      "diagonal-right-up" = col + i + 1
+    )
+    currentRow <- switch(direction,
+      "horizontal-right" = row,
+      "horizontal-left" = row,
+      "vertical-down" = row - i - 1,
+      "vertical-up" = row + i + 1,
+      "diagonal-left-down" = row - i - 1,
+      "diagonal-right-down" = row - i - 1,
+      "diagonal-left-up" = row + i + 1,
+      "diagonal-right-up" = row + i + 1
+    )
     if (currentCol < 1 || currentCol > ncol(grid) || currentRow < 1 || currentRow > nrow(grid)) {
       return(FALSE)
     }
-    if (grid[currentRow, currentCol] != "" && grid[currentRow, currentCol] != substr(word, i, i)) {
+    if (grid[currentCol, currentRow] != "" && grid[currentCol, currentRow] != substr(word, i, i)) {
       return(FALSE)
     }
   }

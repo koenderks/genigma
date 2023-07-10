@@ -20,7 +20,7 @@ try({
 showtext::showtext_auto()
 options(book.font.type = "Dancing Script")
 wordlist <- readLines("https://www.mit.edu/~ecprice/wordlist.10000")
-debug <- FALSE
+debug <- TRUE
 ```
 
 ::: {.content-visible when-format="html"}
@@ -47,7 +47,7 @@ if (!knitr::is_html_output()) {
   p3 <- sudoku(NULL, type = "example")
   p4 <- .instruction("Sudoku", "Fill in the blank squares so that each row, each column and each\n3-by-3 block contains all of the digits 1 to 9.")
   p5 <- wordfinder(NULL, wordlist, type = "example")
-  p6 <- .instruction("Word Finder", "Locate and strike through all words in the puzzle. Words may\nappear vertically, horizontally, or diagonally. Note that letters\ncan be part of multiple words.")
+  p6 <- .instruction("Word Finder", "Locate and strike through all words in the puzzle. Words may\nappear vertically, horizontally, or diagonally and in any direction.\nNote that letters may be part of multiple words.")
   p7 <- crossword(NULL, wordlist, type = "example")
   p8 <- .instruction("Crossword", "Fill in the synonyms of the words in the list at their corresponding\npositions in the puzzle.")
   p9 <- tictactoe(type = "example")
