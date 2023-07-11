@@ -25,9 +25,9 @@ debug <- FALSE
 ```
 
 ::: {.content-visible when-format="html"}
-Welcome to this generative puzzle book! Created using the open-source programming language R, this book is completely [free](https://www.gnu.org/philosophy/free-sw.html)! And here's the best part: it never runs out! If you're craving more puzzles, just come back tomorrow. This book refreshes itself every day, generating 9 brand-new mandalas, 18 sudoku, 18 word finders, 18 crossword puzzles and 18 nonograms for you to enjoy.
+Welcome to this generative puzzle book! Created using the open-source programming language R, this book is completely [free](https://www.gnu.org/philosophy/free-sw.html)! And here's the best part: it never runs out! If you're craving more puzzles, just come back tomorrow. This book refreshes itself every day, generating 9 brand-new mandalas, 18 sudoku, 18 word finders, 18 crossword puzzles and 18 nonograms for you to challenge yourself.
 
-Click [here](https://koenderks.github.io/genigma/Genigma--Generative-Puzzle-Book.pdf) to download today's unique puzzle book!
+Click [here](https://koenderks.github.io/genigma/Genigma--Generative-Puzzles.pdf) to download today's unique puzzle book! It is best printed on `A5` (`148x210mm` or `5.8x8.3inch`) paper.
 :::
 
 ```{r echo = FALSE, message=FALSE}

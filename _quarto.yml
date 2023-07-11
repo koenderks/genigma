@@ -3,7 +3,7 @@ project:
   output-dir: _book
 
 book:
-  title: "Genigma: Generative Puzzle Book"
+  title: "Genigma: Generative Puzzles"
   author:
     - name: Koen Derks
   chapters:
@@ -12,7 +12,7 @@ book:
   page-footer:
     right: |
       This book was built with <a href="https://quarto.org/">Quarto</a>.
-  cover-image: front-page.svg
+  cover-image: front-page.pdf
   site-url: https://koenderks.github.io/genigma/
   repo-url: https://github.com/koenderks/genigma/
   repo-branch: master
@@ -23,7 +23,7 @@ book:
   reader-mode: true
   search: false
   twitter-card:
-    image: "front-page.svg"
+    image: "front-page.pdf"
 
 format:
   html:
