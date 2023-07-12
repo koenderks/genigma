@@ -162,7 +162,7 @@ if (!knitr::is_html_output()) {
 ```
 \clearpage
 
-```{r mandal-2, echo = FALSE, message=FALSE}
+```{r mandala-2, echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   seed <- mandalaseeds[2]
   set.seed(seed)
@@ -975,7 +975,7 @@ if (!knitr::is_html_output() && !debug) {
     set.seed(nonogramseeds[i])
     plotList[[length(plotList) + 1]] <- nonogram(nonogramseeds[i], type = "solution")
   }
-  gridExtra::grid.arrange(p1, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Nonogram ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
+  gridExtra::grid.arrange(grobs = plotList, layout_matrix = matrix(1:9, byrow = TRUE, nrow = 3, ncol = 3), top = grid::textGrob("— Nonogram ~ Solutions —", gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold")))
 }
 ```
 \clearpage
