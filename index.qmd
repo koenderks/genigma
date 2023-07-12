@@ -14,13 +14,17 @@ source("./R/wordfinder.R")
 source("./R/crossword.R")
 source("./R/tictactoe.R")
 source("./R/nonogram.R")
-source("./R/instruction.R")
-try({
+source("./R/misc.R")
+p <- try({
   sysfonts::font_add_google("Dancing Script")
 })
-showtext::showtext_auto()
-options(book.font.type = "Dancing Script")
-wordlist <- readLines("https://www.mit.edu/~ecprice/wordlist.10000")
+if (inherits(p, "try-error")) {
+  options(book.font.type = "sans")
+} else {
+  showtext::showtext_auto()
+  options(book.font.type = "Dancing Script")
+}
+wordlist <- .readWordList()
 debug <- FALSE
 ```
 
@@ -586,7 +590,7 @@ if (!knitr::is_html_output() && !debug) {
 ```
 \clearpage
 
-```{r nongram-12, echo = FALSE, message=FALSE}
+```{r nonogram-12, echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(nonogramseeds[12])
   nonogram(nonogramseeds[12])
@@ -753,7 +757,7 @@ if (!knitr::is_html_output() && !debug) {
 ```
 \clearpage
 
-```{r crosswrod-16, echo = FALSE, message=FALSE}
+```{r crossword-16, echo = FALSE, message=FALSE}
 if (!knitr::is_html_output() && !debug) {
   set.seed(crosswordseeds[16])
   crossword(crosswordseeds[16], wordlist)

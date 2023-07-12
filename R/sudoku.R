@@ -15,8 +15,8 @@
 
 sudoku <- function(seed, type = c("puzzle", "solution", "example")) {
   type <- match.arg(type)
-  blank <- sample(20:70, size = 1)
-  level <- floor((blank - 10) / 10)
+  blank <- sample(21:70, size = 1)
+  level <- ceiling((blank - 20) / 10)
   if (type == "solution") {
     blank <- 0
   }

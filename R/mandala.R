@@ -34,7 +34,7 @@ mandala <- function(type = c("puzzle", "solution", "example")) {
   mandala <- deldir::tile.list(deldir::deldir(frame, sort = TRUE))
   mandala <- rlist::list.filter(mandala, sum(bp) == 0)
   mandala <- rlist::list.filter(mandala, length(intersect(which(x == 0), which(y == 0))) == 0)
-  mandala <- rlist::list.rbind(lapply(mandala, extract_group))
+  mandala <- rlist::list.rbind(lapply(mandala, .extractGroup))
   means_x <- aggregate(mandala$x, list(mandala$ptNum), FUN = mean)[, 2]
   means_y <- aggregate(mandala$y, list(mandala$ptNum), FUN = mean)[, 2]
   p <- ggplot2::ggplot(mandala, ggplot2::aes(x = x, y = y, group = ptNum)) +
@@ -62,6 +62,6 @@ mandala <- function(type = c("puzzle", "solution", "example")) {
   return(p)
 }
 
-extract_group <- function(tile) {
+.extractGroup <- function(tile) {
   as.data.frame(rlist::list.match(tile, "ptNum|x|y|area"))
 }

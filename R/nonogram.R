@@ -31,8 +31,8 @@ nonogram <- function(seed, type = c("puzzle", "solution", "example")) {
   }
   mat <- ifelse(mat == 0, 0, 1)
   nonogram <- list()
-  nonogram$cols <- countNonogramGroups(mat, "row")
-  nonogram$rows <- countNonogramGroups(mat, "col")
+  nonogram$cols <- .countNonogramGroups(mat, "row")
+  nonogram$rows <- .countNonogramGroups(mat, "col")
   canvas <- data.frame(
     x = rep(seq_len(size), times = size),
     y = rep(seq_len(size), each = size), z = c(mat)
@@ -81,7 +81,7 @@ nonogram <- function(seed, type = c("puzzle", "solution", "example")) {
   return(p)
 }
 
-countNonogramGroups <- function(mat, type = c("row", "col")) {
+.countNonogramGroups <- function(mat, type = c("row", "col")) {
   counts <- list()
   if (type == "row") {
     mat <- t(mat)

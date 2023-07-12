@@ -32,3 +32,8 @@
     )
   return(p)
 }
+
+.readWordList <- function() {
+  wordlist <- readLines("https://www.mit.edu/~ecprice/wordlist.10000")
+  return(wordlist)
+}
