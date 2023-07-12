@@ -404,13 +404,6 @@
       ],
       "Hash": "b44addadb528a0d227794121c00572a0"
     },
-    "hellno": {
-      "Package": "hellno",
-      "Version": "0.0.1",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Hash": "ef6b82acf7194aba7cca8449c8d95eb3"
-    },
     "highr": {
       "Package": "highr",
       "Version": "0.10",
@@ -671,20 +664,6 @@
         "R"
       ],
       "Hash": "bd54ba8a0a5faded999a7aab6e46b374"
-    },
-    "r6extended": {
-      "Package": "r6extended",
-      "Version": "0.1.2",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "R6",
-        "digest",
-        "hellno",
-        "magrittr"
-      ],
-      "Hash": "1eec3f69684c62255c0446952a9645a6"
     },
     "rappdirs": {
       "Package": "rappdirs",

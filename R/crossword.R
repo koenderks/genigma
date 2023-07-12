@@ -18,8 +18,8 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
   x <- y <- z <- NULL
   size <- 15
   words <- wordlist[nchar(wordlist) > 2 & nchar(wordlist) < size]
-  cw <- Crossword$new(rows = size, columns = size)
-  while (nrow(cw$words) < 25 && length(words) > 0) {
+  object <- .initialize(rows = size, columns = size)
+  while (nrow(object[["words"]]) < 25 && length(words) > 0) {
     index <- sample.int(length(words), size = 1)
     word <- words[index]
     words <- words[-index]
@@ -39,11 +39,11 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
       next
     }
     clue <- clues[sample.int(length(clues), size = 1)]
-    cw$add_words(words = word, clues = clue)
+    object <- .add_word(object, word, clue)
   }
-  grid <- cw$letters
-  used <- cw$words
-  used$row <- size + 1 - used$row
+  grid <- object[["letters"]]
+  used <- object[["words"]]
+  used[["row"]] <- size + 1 - used[["row"]]
   grid <- grid[, -1]
   grid <- grid[, -ncol(grid)]
   grid <- grid[-1, ]
@@ -54,7 +54,7 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
     x = rep(seq_len(size), each = size), z = c(grid)
   )
   usedSyns <- used$clue
-  usedWords <- tolower(used$word)
+  usedWords <- tolower(used[["word"]])
   names(usedSyns) <- seq_len(length(usedSyns))
   p1 <- ggplot2::ggplot(data = canvas, mapping = ggplot2::aes(x = x, y = y)) +
     ggplot2::geom_rect(xmin = canvas$x - 0.5, xmax = canvas$x + 0.5, ymin = canvas$y - 0.5, ymax = canvas$y + 0.5, fill = "#ffffff", col = "black", linewidth = 0.25) +
@@ -122,154 +122,91 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
   }
 }
 
-Crossword <- R6::R6Class(
-  private = list(
-    rows = NULL,
-    columns = NULL,
-    restrictions_right = NULL,
-    restrictions_down = NULL,
-    add_word = function(word, clue = "") {
-      word <- .normalize_words(word)
-      word <- word[nchar(word) <= private$columns & nchar(word) <= private$rows]
-      if (length(word) == 0) {
-        self$message("word does not fit at all.")
-        return(self)
-      }
-      private$update_grid_data()
-      iffer <- cw_greplv(substring(private$restrictions_down$val, 1, nchar(word)), word) & nchar(private$restrictions_down$val) >= nchar(word)
-      down <- private$restrictions_down |>
-        dplyr::filter(iffer) |>
-        dplyr::rename(length = nchar) |>
-        dplyr::mutate(
-          direction = "down",
-          word      = word,
-          clue      = clue,
-          val       = substring(val, 1, nchar(word))
-        )
-      iffer <- cw_greplv(substring(private$restrictions_right$val, 1, nchar(word)), word) & nchar(private$restrictions_right$val) >= nchar(word)
-      right <- private$restrictions_right |>
-        dplyr::filter(iffer) |>
-        dplyr::rename(length = nchar) |>
-        dplyr::mutate(
-          direction = "right",
-          word      = word,
-          clue      = clue,
-          val       = substring(val, 1, nchar(word))
-        )
-      if ((nrow(right) + nrow(down)) > 0) {
-        words_right <- length(self$words$direction == "right")
-        words_down <- length(self$words$direction == "down")
-        tmp <- rbind(right, down)
-        tmp$weight <- 1
-        tmp$weight[tmp$direction == "right"] <- tmp$weight[tmp$direction == "right"] + max(words_down - words_right, 0)
-        tmp$weight[tmp$direction == "down"] <- tmp$weight[tmp$direction == "down"] + max(words_right - words_down, 0)
-        tmp$weight <- tmp$weight + stringr::str_count(tmp$val, pattern = "[[:alpha:]]")
-        tmp$weight <- tmp$weight + (abs(tmp$row - private$rows / 2) + abs(tmp$col - private$columns / 2)) / (private$rows / 2 + private$columns / 2)
-        new_word <- tmp |>
-          dplyr::filter(weight == max(weight)) |>
-          dplyr::mutate(word = stringr::str_replace_all(word, "([^[:alpha:]])", ""), length = nchar(word)) |>
-          dplyr::slice(1) |>
-          dplyr::select(-val, -weight)
-        private$put_word_on_grid(word = paste0("#", new_word$word, "#"), row = new_word$row, column = new_word$col, direction = new_word$direction)
-        if (new_word$direction == "down") {
-          new_word$col <- new_word$col - 1L
-        } else if (new_word$direction == "right") {
-          new_word$row <- new_word$row - 1L
-        }
-        self$words <- rbind(self$words, new_word)
-      } else {
-        self$message("Could not place on grid - nothing that suffices restrictions")
-      }
-      return(self)
-    },
-    put_word_on_grid = function(word, row = 1, column = 1, direction = c("down", "right")) {
-      self$message(c(word, row, column, direction, "\n\n", sep = " / "))
-      if (direction == "right") {
-        stopifnot(nchar(word) <= (private$columns - column + 1))
-        self$letters[row, column:(column + nchar(word) - 1)] <- unlist(strsplit(word, ""))
-      } else if (direction == "down") {
-        stopifnot(nchar(word) <= (private$rows - row + 1))
-        self$letters[row:(row + nchar(word) - 1), column] <- unlist(strsplit(word, ""))
-      } else {
-        stop("direction neither 'down' nor 'right'")
-      }
-      return(self)
-    },
-    update_grid_data = function() {
-      private$restrictions_right <- matrix("", nrow = private$rows, ncol = private$columns)
-      private$restrictions_down <- matrix("", nrow = private$rows, ncol = private$columns)
-      for (rowi in seq_len(private$rows)) {
-        for (coli in seq_len(private$columns)) {
-          private$restrictions_right[rowi, coli] <- paste(self$letters[rowi, coli:private$columns], collapse = "")
-          private$restrictions_down[rowi, coli] <- paste(self$letters[rowi:private$rows, coli], collapse = "")
-        }
-      }
-      private$restrictions_right <- .matrix_to_df(private$restrictions_right)
-      private$restrictions_down <- .matrix_to_df(private$restrictions_down)
-      private$restrictions_right$nchar <- nchar(private$restrictions_right$val)
-      private$restrictions_down$nchar <- nchar(private$restrictions_down$val)
-      private$restrictions_down <- dplyr::anti_join(private$restrictions_down, self$words |> dplyr::filter(direction == "down"), by = c("row", "col"))
-      private$restrictions_right <- dplyr::anti_join(private$restrictions_right, self$words |> dplyr::filter(direction == "right"), by = c("row", "col"))
-      return(self)
-    }
-  ),
-  active = NULL,
-  lock_objects = TRUE,
-  class = TRUE,
-  portable = TRUE,
-  lock_class = FALSE,
-  cloneable = TRUE,
-  classname = "crossword",
-  inherit = r6extended::r6extended,
-  public = list(
-    letters = NULL,
-    words = NULL,
-    initialize = function(rows = 10, columns = 10, verbose = FALSE) {
-      self$options$verbose <- verbose
-      rows <- rows + 2
-      private$rows <- rows
-      columns <- columns + 2
-      private$columns <- columns
-      tmp <- data.frame(
-        row              = rep(seq_len(rows), columns),
-        col              = rep(seq_len(columns), each = rows),
-        space_right      = NA,
-        space_down       = NA,
-        stringsAsFactors = FALSE
-      )
-      tmp$space_right <- columns - tmp$col + 1
-      tmp$space_down <- rows - tmp$row + 1
-      self$letters <- matrix(".", nrow = rows, ncol = columns)
-      self$letters[1, ] <- "#"
-      self$letters[dim(self$letters)[1], ] <- "#"
-      self$letters[, 1] <- "#"
-      self$letters[, dim(self$letters)[2]] <- "#"
-      self$words <- data.frame(
-        row              = integer(),
-        col              = integer(),
-        word             = character(),
-        direction        = character(),
-        clue             = character(),
-        length           = integer(),
-        stringsAsFactors = FALSE
-      )
-      private$restrictions_right <- matrix("", nrow = rows, ncol = columns)
-      private$restrictions_down <- matrix("", nrow = rows, ncol = columns)
-      return(self)
-    },
-    add_words = function(words, clues = NULL) {
-      if (is.null(clues)) {
-        clues <- rep("", length(words))
-      }
-      for (i in seq_along(words)) {
-        private$add_word(
-          word = words[i],
-          clue = clues[i]
-        )
-      }
-    }
+.initialize <- function(rows = 10, columns = 10, verbose = FALSE) {
+  object <- list()
+  rows <- rows + 2
+  object$rows <- rows
+  columns <- columns + 2
+  object$columns <- columns
+  tmp <- data.frame(
+    row              = rep(seq_len(rows), columns),
+    col              = rep(seq_len(columns), each = rows),
+    space_right      = NA,
+    space_down       = NA,
+    stringsAsFactors = FALSE
   )
-)
+  tmp$space_right <- columns - tmp$col + 1
+  tmp$space_down <- rows - tmp$row + 1
+  object$letters <- matrix(".", nrow = rows, ncol = columns)
+  object$letters[1, ] <- "#"
+  object$letters[dim(object$letters)[1], ] <- "#"
+  object$letters[, 1] <- "#"
+  object$letters[, dim(object$letters)[2]] <- "#"
+  object$words <- data.frame(
+    row              = integer(),
+    col              = integer(),
+    word             = character(),
+    direction        = character(),
+    clue             = character(),
+    length           = integer(),
+    stringsAsFactors = FALSE
+  )
+  object$restrictions_right <- matrix("", nrow = rows, ncol = columns)
+  object$restrictions_down <- matrix("", nrow = rows, ncol = columns)
+  return(object)
+}
+
+.add_word <- function(object, word, clue) {
+  word <- .normalize_words(word)
+  word <- word[nchar(word) <= object$columns & nchar(word) <= object$rows]
+  if (length(word) == 0) {
+    return(object)
+  }
+  object <- .update_grid_data(object)
+  iffer <- cw_greplv(substring(object$restrictions_down$val, 1, nchar(word)), word) & nchar(object$restrictions_down$val) >= nchar(word)
+  down <- object$restrictions_down |>
+    dplyr::filter(iffer) |>
+    dplyr::rename(length = nchar) |>
+    dplyr::mutate(
+      direction = "down",
+      word      = word,
+      clue      = clue,
+      val       = substring(val, 1, nchar(word))
+    )
+  iffer <- cw_greplv(substring(object$restrictions_right$val, 1, nchar(word)), word) & nchar(object$restrictions_right$val) >= nchar(word)
+  right <- object$restrictions_right |>
+    dplyr::filter(iffer) |>
+    dplyr::rename(length = nchar) |>
+    dplyr::mutate(
+      direction = "right",
+      word      = word,
+      clue      = clue,
+      val       = substring(val, 1, nchar(word))
+    )
+  if ((nrow(right) + nrow(down)) > 0) {
+    words_right <- length(object$words$direction == "right")
+    words_down <- length(object$words$direction == "down")
+    tmp <- rbind(right, down)
+    tmp$weight <- 1
+    tmp$weight[tmp$direction == "right"] <- tmp$weight[tmp$direction == "right"] + max(words_down - words_right, 0)
+    tmp$weight[tmp$direction == "down"] <- tmp$weight[tmp$direction == "down"] + max(words_right - words_down, 0)
+    tmp$weight <- tmp$weight + stringr::str_count(tmp$val, pattern = "[[:alpha:]]")
+    tmp$weight <- tmp$weight + (abs(tmp$row - object$rows / 2) + abs(tmp$col - object$columns / 2)) / (object$rows / 2 + object$columns / 2)
+    new_word <- tmp |>
+      dplyr::filter(weight == max(weight)) |>
+      dplyr::mutate(word = stringr::str_replace_all(word, "([^[:alpha:]])", ""), length = nchar(word)) |>
+      dplyr::slice(1) |>
+      dplyr::select(-val, -weight)
+    object <- .put_word_on_grid(object, word = paste0("#", new_word$word, "#"), row = new_word$row, column = new_word$col, direction = new_word$direction)
+    if (new_word$direction == "down") {
+      new_word$col <- new_word$col - 1L
+    } else if (new_word$direction == "right") {
+      new_word$row <- new_word$row - 1L
+    }
+    object$words <- rbind(object$words, new_word)
+  }
+  return(object)
+}
 
 .normalize_words <- function(words) {
   iffer <- stringr::str_detect(words, "\\W")
@@ -287,6 +224,37 @@ Crossword <- R6::R6Class(
   words <- stringr::str_replace_all(words, "\u00df", "SS")
   words <- paste0("#", words, "#")
   return(words)
+}
+
+.update_grid_data <- function(object) {
+  object$restrictions_right <- matrix("", nrow = object$rows, ncol = object$columns)
+  object$restrictions_down <- matrix("", nrow = object$rows, ncol = object$columns)
+  for (rowi in seq_len(object$rows)) {
+    for (coli in seq_len(object$columns)) {
+      object$restrictions_right[rowi, coli] <- paste(object$letters[rowi, coli:object$columns], collapse = "")
+      object$restrictions_down[rowi, coli] <- paste(object$letters[rowi:object$rows, coli], collapse = "")
+    }
+  }
+  object$restrictions_right <- .matrix_to_df(object$restrictions_right)
+  object$restrictions_down <- .matrix_to_df(object$restrictions_down)
+  object$restrictions_right$nchar <- nchar(object$restrictions_right$val)
+  object$restrictions_down$nchar <- nchar(object$restrictions_down$val)
+  object$restrictions_down <- dplyr::anti_join(object$restrictions_down, object$words |> dplyr::filter(direction == "down"), by = c("row", "col"))
+  object$restrictions_right <- dplyr::anti_join(object$restrictions_right, object$words |> dplyr::filter(direction == "right"), by = c("row", "col"))
+  return(object)
+}
+
+.put_word_on_grid <- function(object, word, row = 1, column = 1, direction = c("down", "right")) {
+  if (direction == "right") {
+    stopifnot(nchar(word) <= (object$columns - column + 1))
+    object$letters[row, column:(column + nchar(word) - 1)] <- unlist(strsplit(word, ""))
+  } else if (direction == "down") {
+    stopifnot(nchar(word) <= (object$rows - row + 1))
+    object$letters[row:(row + nchar(word) - 1), column] <- unlist(strsplit(word, ""))
+  } else {
+    stop("direction neither 'down' nor 'right'")
+  }
+  return(object)
 }
 
 cw_greplv <- compiler::cmpfun(Vectorize(grepl, vectorize.args = "pattern"))
