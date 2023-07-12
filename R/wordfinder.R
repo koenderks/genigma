@@ -17,7 +17,7 @@ wordfinder <- function(seed, wordlist, type = c("puzzle", "solution", "example")
   type <- match.arg(type)
   x <- y <- z <- NULL
   size <- 15
-  words <- wordlist[nchar(wordlist) > 2 & nchar(wordlist) < size]
+  words <- wordlist[nchar(wordlist) > 3 & nchar(wordlist) < size]
   grid <- matrix("", nrow = size, ncol = size)
   usedWordsList <- list()
   while (length(usedWordsList) < 50 && length(words) > 0) {
