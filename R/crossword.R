@@ -18,7 +18,7 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
   x <- y <- z <- NULL
   size <- 15
   words <- wordlist[nchar(wordlist) > 2 & nchar(wordlist) < size]
-  object <- .initialize(rows = size, columns = size)
+  object <- .initCrossword(rows = size, columns = size)
   while (nrow(object[["words"]]) < 25 && length(words) > 0) {
     index <- sample.int(length(words), size = 1)
     word <- words[index]
@@ -39,7 +39,7 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
       next
     }
     clue <- clues[sample.int(length(clues), size = 1)]
-    object <- .add_word(object, word, clue)
+    object <- .addCrossword(object, word, clue)
   }
   grid <- object[["letters"]]
   used <- object[["words"]]
@@ -122,17 +122,17 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
   }
 }
 
-.initialize <- function(rows = 10, columns = 10, verbose = FALSE) {
+.initCrossword <- function(rows = 10, columns = 10, verbose = FALSE) {
   object <- list()
   rows <- rows + 2
   object$rows <- rows
   columns <- columns + 2
   object$columns <- columns
   tmp <- data.frame(
-    row              = rep(seq_len(rows), columns),
-    col              = rep(seq_len(columns), each = rows),
-    space_right      = NA,
-    space_down       = NA,
+    row = rep(seq_len(rows), columns),
+    col = rep(seq_len(columns), each = rows),
+    space_right = NA,
+    space_down = NA,
     stringsAsFactors = FALSE
   )
   tmp$space_right <- columns - tmp$col + 1
@@ -156,32 +156,32 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
   return(object)
 }
 
-.add_word <- function(object, word, clue) {
-  word <- .normalize_words(word)
+.addCrossword <- function(object, word, clue) {
+  word <- paste0("#", word, "#")
   word <- word[nchar(word) <= object$columns & nchar(word) <= object$rows]
   if (length(word) == 0) {
     return(object)
   }
-  object <- .update_grid_data(object)
-  iffer <- cw_greplv(substring(object$restrictions_down$val, 1, nchar(word)), word) & nchar(object$restrictions_down$val) >= nchar(word)
+  object <- .updateCrossword(object)
+  iffer <- greplvCrossword(substring(object$restrictions_down$val, 1, nchar(word)), word) & nchar(object$restrictions_down$val) >= nchar(word)
   down <- object$restrictions_down |>
     dplyr::filter(iffer) |>
     dplyr::rename(length = nchar) |>
     dplyr::mutate(
       direction = "down",
-      word      = word,
-      clue      = clue,
-      val       = substring(val, 1, nchar(word))
+      word = word,
+      clue = clue,
+      val = substring(val, 1, nchar(word))
     )
-  iffer <- cw_greplv(substring(object$restrictions_right$val, 1, nchar(word)), word) & nchar(object$restrictions_right$val) >= nchar(word)
+  iffer <- greplvCrossword(substring(object$restrictions_right$val, 1, nchar(word)), word) & nchar(object$restrictions_right$val) >= nchar(word)
   right <- object$restrictions_right |>
     dplyr::filter(iffer) |>
     dplyr::rename(length = nchar) |>
     dplyr::mutate(
       direction = "right",
-      word      = word,
-      clue      = clue,
-      val       = substring(val, 1, nchar(word))
+      word = word,
+      clue = clue,
+      val = substring(val, 1, nchar(word))
     )
   if ((nrow(right) + nrow(down)) > 0) {
     words_right <- length(object$words$direction == "right")
@@ -197,7 +197,7 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
       dplyr::mutate(word = stringr::str_replace_all(word, "([^[:alpha:]])", ""), length = nchar(word)) |>
       dplyr::slice(1) |>
       dplyr::select(-val, -weight)
-    object <- .put_word_on_grid(object, word = paste0("#", new_word$word, "#"), row = new_word$row, column = new_word$col, direction = new_word$direction)
+    object <- .injectCrossword(object, word = paste0("#", new_word$word, "#"), row = new_word$row, column = new_word$col, direction = new_word$direction)
     if (new_word$direction == "down") {
       new_word$col <- new_word$col - 1L
     } else if (new_word$direction == "right") {
@@ -208,25 +208,7 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
   return(object)
 }
 
-.normalize_words <- function(words) {
-  iffer <- stringr::str_detect(words, "\\W")
-  if (sum(iffer) > 0) {
-    warning(
-      "There are words containing non-letters: ",
-      paste(words[iffer], collapse = "; ")
-    )
-  }
-  words <- toupper(words)
-  words <- stringr::str_replace_all(words, " +", "")
-  words <- stringr::str_replace_all(words, "\u00c4", "AE")
-  words <- stringr::str_replace_all(words, "\u00d6", "OE")
-  words <- stringr::str_replace_all(words, "\u00dc", "UE")
-  words <- stringr::str_replace_all(words, "\u00df", "SS")
-  words <- paste0("#", words, "#")
-  return(words)
-}
-
-.update_grid_data <- function(object) {
+.updateCrossword <- function(object) {
   object$restrictions_right <- matrix("", nrow = object$rows, ncol = object$columns)
   object$restrictions_down <- matrix("", nrow = object$rows, ncol = object$columns)
   for (rowi in seq_len(object$rows)) {
@@ -235,8 +217,8 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
       object$restrictions_down[rowi, coli] <- paste(object$letters[rowi:object$rows, coli], collapse = "")
     }
   }
-  object$restrictions_right <- .matrix_to_df(object$restrictions_right)
-  object$restrictions_down <- .matrix_to_df(object$restrictions_down)
+  object$restrictions_right <- .convertMatrix(object$restrictions_right)
+  object$restrictions_down <- .convertMatrix(object$restrictions_down)
   object$restrictions_right$nchar <- nchar(object$restrictions_right$val)
   object$restrictions_down$nchar <- nchar(object$restrictions_down$val)
   object$restrictions_down <- dplyr::anti_join(object$restrictions_down, object$words |> dplyr::filter(direction == "down"), by = c("row", "col"))
@@ -244,7 +226,7 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
   return(object)
 }
 
-.put_word_on_grid <- function(object, word, row = 1, column = 1, direction = c("down", "right")) {
+.injectCrossword <- function(object, word, row = 1, column = 1, direction = c("down", "right")) {
   if (direction == "right") {
     stopifnot(nchar(word) <= (object$columns - column + 1))
     object$letters[row, column:(column + nchar(word) - 1)] <- unlist(strsplit(word, ""))
@@ -257,9 +239,9 @@ crossword <- function(seed, wordlist, type = c("puzzle", "solution", "example"))
   return(object)
 }
 
-cw_greplv <- compiler::cmpfun(Vectorize(grepl, vectorize.args = "pattern"))
+greplvCrossword <- compiler::cmpfun(Vectorize(grepl, vectorize.args = "pattern"))
 
-.matrix_to_df <- function(x) {
+.convertMatrix <- function(x) {
   data.frame(
     row = as.vector(row(x)),
     col = as.vector(col(x)),
