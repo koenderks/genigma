@@ -17,12 +17,10 @@ wordfinder <- function(seed, wordlist, type = c("puzzle", "solution", "example")
   type <- match.arg(type)
   x <- y <- z <- NULL
   size <- 15
-  words <- wordlist[nchar(wordlist) > 2 & nchar(wordlist) < 10]
+  words <- wordlist[nchar(wordlist) > 2 & nchar(wordlist) < size]
   grid <- matrix("", nrow = size, ncol = size)
   usedWordsList <- list()
-  reqWords <- sample(20:50, size = 1)
-  level <- ceiling(reqWords / 10)
-  while (length(usedWordsList) < reqWords && length(words) > 0) {
+  while (length(usedWordsList) < 50 && length(words) > 0) {
     direction <- sample(c("horizontal-right", "horizontal-left", "vertical-down", "vertical-up", "diagonal-left-down", "diagonal-right-down", "diagonal-left-up", "diagonal-right-up"), 1)
     validPlacement <- FALSE
     while (!validPlacement && length(words) > 0) {
@@ -129,7 +127,7 @@ wordfinder <- function(seed, wordlist, type = c("puzzle", "solution", "example")
         axis.ticks = ggplot2::element_blank(),
         plot.margin = ggplot2::unit(c(1, 1, 1, 1), "cm"),
       )
-    title_grob <- grid::textGrob(paste0("— Word Finder ", names(seed), " ~ Level ", level, " —"), gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold"))
+    title_grob <- grid::textGrob(paste0("— Word Finder ", names(seed), " —"), gp = grid::gpar(fontsize = 75, fontfamily = getOption("book.font.type", "sans"), fontface = "bold"))
     return(gridExtra::grid.arrange(p2, p1, layout_matrix = matrix(c(rep(2, 16), rep(1, 8)), byrow = TRUE, nrow = 6, ncol = 4), top = title_grob))
   }
 }

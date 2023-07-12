@@ -60,7 +60,7 @@ sudoku <- function(seed, type = c("puzzle", "solution", "example")) {
       plot.title = ggplot2::element_text(size = 75, face = "bold", hjust = 0.5, family = getOption("book.font.type", "sans"))
     )
   if (type == "puzzle") {
-    p <- p + ggplot2::ggtitle(paste0("— Sudoku ", names(seed), " ~ Level ", level, " —")) +
+    p <- p + ggplot2::ggtitle(paste0("— Sudoku ", names(seed), " ", rep("*", level), " —")) +
       ggplot2::theme(plot.margin = ggplot2::unit(c(1, 0, 21 - 13.5 - 1, 0), "cm")) +
       ggplot2::annotate(geom = "text", x = canvas$x, y = canvas$y, label = canvas$z, size = 15)
   } else if (type == "example") {
