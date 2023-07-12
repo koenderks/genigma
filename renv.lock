@@ -215,7 +215,13 @@
     "dictionaRy": {
       "Package": "dictionaRy",
       "Version": "0.1.1",
-      "Source": "Repository"
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "jsonlite",
+        "tibble"
+      ],
+      "Hash": "95fd46899b39b4b0bd5308efcb309a0a"
     },
     "digest": {
       "Package": "digest",
@@ -828,16 +834,6 @@
         "vctrs"
       ],
       "Hash": "671a4d384ae9d32fc47a14e98bfa3dc8"
-    },
-    "syn": {
-      "Package": "syn",
-      "Version": "0.1.0",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R"
-      ],
-      "Hash": "0ccff6ec33d5a679bcb29bda18411580"
     },
     "sys": {
       "Package": "sys",
