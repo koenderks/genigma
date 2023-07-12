@@ -15,15 +15,11 @@ source("./R/crossword.R")
 source("./R/tictactoe.R")
 source("./R/nonogram.R")
 source("./R/misc.R")
-p <- try({
+try({
   sysfonts::font_add_google("Dancing Script")
 })
-if (inherits(p, "try-error")) {
-  options(book.font.type = "sans")
-} else {
-  showtext::showtext_auto()
-  options(book.font.type = "Dancing Script")
-}
+showtext::showtext_auto()
+options(book.font.type = "Dancing Script")
 wordlist <- .readWordList()
 debug <- FALSE
 ```
