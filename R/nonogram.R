@@ -16,7 +16,21 @@
 nonogram <- function(seed, type = c("puzzle", "solution", "example")) {
   type <- match.arg(type)
   size <- 20
-  pos <- c(LETTERS, letters)
+  pos <- c(
+    LETTERS, letters, 1:9, "+", "\\alpha", "\\beta", "<", ">", "\\Gamma",
+    "\\gamma", "\\Delta", "\\delta", "\\epsilon", "\\varepsilon",
+    "\\zeta", "\\Theta", "\\theta", "\\vartheta", "\\iota", "\\kappa",
+    "\\varkappa", "\\lambda", "\\mu", "\\nu", "\\Xi", "\\xi", "\\Pi",
+    "\\pi", "\\varpi", "\\rho", "\\varrho", "\\Sigma", "\\sigma",
+    "\\varsigma", "\\tau", "\\Upsilon", "\\upsilon", "\\Phi", "\\phi",
+    "\\varphi", "\\chi", "\\Psi", "\\psi", "\\Omega", "\\omega", "!",
+    "?", "\\infty", "\\asymp", "\\bowtie", "\\pm", "\\times", "\\star",
+    "\\dagger", "\\ddagger", "\\uplus", "\\diamond", "\\wr", "\\oplus",
+    "\\otimes", "\\ominus", "\\oslash", "\\odot", "\\amalg", "\\nsim",
+    "\\measuredangle", "\\square", "\\Rightarrow", "\\rightarrow",
+    "\\Leftarrow", "\\leftarrow", "\\gimel", "\\beth", "\\aleph",
+    "\\partial", "\\eth", "\\hbar", "\\Re", "\\Im", "\\wp", "\\nabla"
+  )
   lab <- pos[sample.int(length(pos), 1)]
   im <- magick::image_read(paste0("https://latex.codecogs.com/png.image?", lab))
   im3 <- magick::image_scale(im, geometry = paste0(size, "x", size))
