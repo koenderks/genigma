@@ -165,8 +165,13 @@
     "colourlovers": {
       "Package": "colourlovers",
       "Version": "0.3.6",
-      "Source": "Repository",
-      "Repository": "CRAN",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "colourlovers",
+      "RemoteUsername": "andrewheiss",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "c9074a14431b68f71bcf3595998ba785503164ca",
       "Requirements": [
         "XML",
         "graphics",
@@ -175,7 +180,7 @@
         "png",
         "utils"
       ],
-      "Hash": "f766ed406773d13ac129e3b8f9fd6832"
+      "Hash": "dfdd65af04649bbbc9af2319760291c0"
     },
     "curl": {
       "Package": "curl",
